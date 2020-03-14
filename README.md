@@ -1,5 +1,6 @@
 # stack-fedora-basic
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://github.com/gitbucket/gitbucket/blob/master/LICENSE)
+
 A cjr stack based on Fedora and dnf
 
 ## Installation
