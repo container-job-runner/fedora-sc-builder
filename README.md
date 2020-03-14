@@ -1,4 +1,5 @@
 # stack-fedora-basic
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://github.com/gitbucket/gitbucket/blob/master/LICENSE)
 A cjr stack based on Fedora and dnf
 
 ## Installation
@@ -9,25 +10,26 @@ or manually clone the repository into your cjr stacks directory.
 
 ## Description
 
-This stack creates a non-root user with matching id and groupid as host user,  
-and uses dnf to install basic support for any subset of the following:
+This stack creates a non-root user with matching id and groupid as host user,  and uses dnf to install basic support for any subset of the following:
 
 1. **Languages**
-  - c, c++
-  - Fortran
-  - Python 3
-  - Julia
-  - R
-  - latex
+   - c, c++
+   - Fortran
+   - Python 3
+   - Julia
+   - R
+   - latex
 2. **Libraries**
-  - matplotlib
-  - BLAS, LAPACK
-  - OPENMPI
+   - matplotlib
+   - BLAS, LAPACK
+   - OPENMPI
 3. **dev environments**
-  - jupyter notebook, jupyter lab
-  - vim,
+   - jupyter notebook, jupyter lab
+   - vim,
 4. **Package Managers**
-  - spack
+   - spack
+
+Note: configuration for jupyter is stored in a bound folder inside the stack directory.
 
 ## Customization
 
@@ -41,4 +43,4 @@ To modify the package install process, modify the files
 - build-scripts/root_install.sh
 - build-scripts/user_install.sh
 
-Finally, username, password, and sudo privileges can be modified by adjusting the user args in config.yml
+Finally, the non-root user's username, password, and sudo privileges can be modified by adjusting the user args in config.yml
