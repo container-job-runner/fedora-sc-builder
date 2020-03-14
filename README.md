@@ -1,7 +1,7 @@
 # stack-fedora-basic
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://github.com/gitbucket/gitbucket/blob/master/LICENSE)
 
-A cjr stack based on Fedora and dnf
+A cjr stack based on Fedora and dnf.
 
 ## Installation
 
@@ -11,7 +11,7 @@ or manually clone the repository into your cjr stacks directory.
 
 ## Description
 
-This stack creates a non-root user with matching id and groupid as host user,  and uses dnf to install basic support for any subset of the following:
+This stack creates a non-root user with matching user id and group id as the host user, and uses dnf to install basic support for any subset of the following:
 
 1. **Languages**
    - c, c++
@@ -21,16 +21,16 @@ This stack creates a non-root user with matching id and groupid as host user,  a
    - R
    - latex
 2. **Libraries**
-   - matplotlib
+   - Matplotlib
    - BLAS, LAPACK
    - OPENMPI
 3. **dev environments**
-   - jupyter notebook, jupyter lab
-   - vim,
+   - Jupyter notebook, Jupyter lab
+   - vim, git, vim, emacs, tmux
 4. **Package Managers**
    - spack
 
-Note: configuration for jupyter is stored in a bound folder inside the stack directory.
+Note: configuration for Jupyter is stored in a bound folder inside the stack directory.
 
 ## Customization
 
