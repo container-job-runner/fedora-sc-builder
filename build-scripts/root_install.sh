@@ -56,7 +56,7 @@ pkg_lib_openMPI=('environment-modules' 'openmpi-devel')
 pkg_lib_matPlotLib=('python3-matplotlib')
 
 # -- 1.3 DNF Packages: development environments   ------------------------------
-pkg_dev_jupyter=('nodejs' 'python3-pip' 'python3-notebook' 'mathjax' 'sscg')
+pkg_dev_jupyter=('nodejs' 'python3-pip' 'python3-notebook' 'mathjax' 'sscg' 'git')
 pkg_dev_cli=('git' 'vim' 'emacs' 'tmux')
 
 # -- 1.3 DNF Packages: package managers   --------------------------------------
@@ -124,6 +124,10 @@ eval $pkg_manager install -y ${!pkgsUniq[@]}
 # -----> Jupyter
 if [ "$DEV_JUPYTER" = "TRUE" ] ; then
   pip3 install jupyterlab # Jupyter Lab
+  # --> install atom dark theme -------------------------------------------------
+  cd /opt
+  git clone https://github.com/container-job-runner/jupyter-atom-theme.git
+  jupyter labextension install jupyter-atom-theme
   # --> matplotlib Widgets for JupiterLab (https://github.com/matplotlib/jupyter-matplotlib)
   if [ "$LIB_MATPLOTLIB" = "TRUE" ] ; then
     pip3 install ipympl
