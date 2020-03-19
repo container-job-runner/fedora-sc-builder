@@ -30,3 +30,4 @@ files:
   containerRoot: "/home/user"
 flags:
   userns: keep-id
+  chown-file-volume: true
