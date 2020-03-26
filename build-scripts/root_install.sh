@@ -53,7 +53,7 @@ fi
 # -- 1.2 DNF Packages: libraries  ----------------------------------------------
 pkg_lib_linAlg=('liblas-devel' 'lapack-devel' 'fftw-devel')
 pkg_lib_openMPI=('environment-modules' 'openmpi-devel')
-pkg_lib_matPlotLib=('python3-matplotlib', 'qt5-devel', 'libxkbfile', 'xorg-x11-fonts-misc', 'xorg-x11-xbitmaps')
+pkg_lib_matPlotLib=('python3-matplotlib' 'qt5-devel' 'libxkbfile' 'xorg-x11-fonts-misc' 'xorg-x11-xbitmaps')
 
 # -- 1.3 DNF Packages: development environments   ------------------------------
 pkg_dev_jupyter=('nodejs' 'python3-pip' 'python3-notebook' 'mathjax' 'sscg' 'git')
@@ -123,7 +123,7 @@ eval $pkg_manager install -y ${!pkgsUniq[@]}
 
 # -----> Jupyter
 if [ "$DEV_JUPYTER" = "TRUE" ] ; then
-  sudo pip3 install --upgrade pip # upgrade pip (important for pyQtk5 library - otherwise quits)
+  pip3 install --upgrade pip # upgrade pip (important for pyQtk5 library - otherwise quits)
   pip3 install jupyterlab # Jupyter Lab
   # --> install atom dark theme -------------------------------------------------
   cd /opt
