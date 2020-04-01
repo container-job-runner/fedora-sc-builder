@@ -33,7 +33,7 @@ ARG GROUP_ID
 
 # -- Generate restricted user account ------------------------------------------
 RUN dnf install -y shadow-utils passwd cracklib-dicts
-RUN if [ -z "$USER_ID" ] || [ -z "GROUP_ID" ] ; \
+RUN if [ -z "$USER_ID" ] || [ -z "$GROUP_ID" ] ; \
   then useradd -m -l -s /bin/bash $USER_NAME ; \
   else (groupadd -o --gid $GROUP_ID $USER_NAME) && (useradd -m -l -o -s /bin/bash --uid $USER_ID --gid $GROUP_ID $USER_NAME) ; fi
 RUN echo "$USER_NAME:$USER_PASSWORD" | chpasswd
