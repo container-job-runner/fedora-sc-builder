@@ -105,6 +105,9 @@ if [ "$LIB_OPENMPI" = "TRUE" ] ; then
 if [ "$DEV_JUPYTER" = "TRUE" ] ; then
   pkgs=("${pkgs[@]}" "${pkg_dev_jupyter[@]}") ; fi
 
+if [ "$DEV_THEIA" = "TRUE" ] ; then
+  pkgs=("${pkgs[@]}" "${pkg_dev_theia[@]}") ; fi
+
 if [ "$DEV_CLI" = "TRUE" ] ; then
   pkgs=("${pkgs[@]}" "${pkg_dev_cli[@]}") ; fi
 
