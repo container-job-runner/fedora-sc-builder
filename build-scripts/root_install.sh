@@ -118,8 +118,10 @@ declare -A pkgsUniq
 for k in ${pkgs[@]} ; do pkgsUniq[$k]=1 ; done
 
 # -- install dependencies ------------------------------------------------------
-echo "$pkg_manager install -y ${!pkgsUniq[@]}"
-eval $pkg_manager install -y ${!pkgsUniq[@]}
+if [ -n "$pkgs" ] ; then
+  echo "$pkg_manager install -y ${!pkgsUniq[@]}"
+  eval $pkg_manager install -y ${!pkgsUniq[@]}
+fi
 
 # == STEP 2: Install Additional Packages =======================================
 
