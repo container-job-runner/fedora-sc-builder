@@ -21,6 +21,7 @@
 # ---- Dev Environemnts --------------------------------------------------------
 #     DEV_JUPYTER     TRUE => Jupyter Notebook And Jupyter Lab with support for
 #                             all select languages.
+#     DEV_THEIA       TRUE -> Theia IDE with support for selected languages.
 #     DEV_CLI         TRUE => CLI development tools: git, tmux, vim, emac
 #
 # ---- Package Managers --------------------------------------------------------
@@ -57,6 +58,7 @@ pkg_lib_matPlotLib=('python3-matplotlib' 'qt5-devel' 'libxkbfile' 'xorg-x11-font
 
 # -- 1.3 DNF Packages: development environments   ------------------------------
 pkg_dev_jupyter=('nodejs' 'python3-pip' 'python3-notebook' 'mathjax' 'sscg' 'git')
+pkg_dev_theia=('gcc-c++' 'make' 'python2' 'findutils' 'git' 'wget') #gcc-c++ make for node, python2 for yarn build and findutils for nvm
 pkg_dev_cli=('git' 'vim' 'emacs' 'tmux')
 
 # -- 1.3 DNF Packages: package managers   --------------------------------------
