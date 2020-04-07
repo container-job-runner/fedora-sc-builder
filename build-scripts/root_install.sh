@@ -37,7 +37,7 @@ pkg_manager="dnf"
 # == STEP 1: Install DNF packages ==============================================
 
 # -- 1.1 DNF Packages: languages -----------------------------------------------
-pkg_lang_c=('gcc' 'gdb' 'make')
+pkg_lang_c=('gcc' 'gcc-c++' 'gdb' 'make')
 pkg_lang_fortran=('gcc' 'gdb' 'make' 'gcc-gfortran')
 pkg_lang_python3=('python3' 'python3-numpy' 'python3-scipy' 'python3-sympy' 'python3-ipython' 'python3-pandas')
 pkg_lang_julia=('julia')
