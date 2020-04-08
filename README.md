@@ -7,7 +7,7 @@ A cjr stack based on Fedora and dnf.
 
 To use use this stack with cjr simply run the command
 ```console
-shellscript cjr stack:pull https://github.com/container-job-runner/stack-fedora-basic.git
+cjr stack:pull https://github.com/container-job-runner/stack-fedora-basic.git
 ```
 or manually clone the repository into your cjr stacks directory.
 
@@ -15,7 +15,7 @@ You can then build the stack by running
 ```console
 cjr stack:build stack-fedora-basic
 ```
-To configure the software list see [the customization section](##Customization) below.
+To configure the software list see [the customization section](#Customization) below.
 
 ## Description
 
