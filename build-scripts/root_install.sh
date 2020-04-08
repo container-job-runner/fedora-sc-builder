@@ -58,7 +58,7 @@ pkg_lib_matPlotLib=('python3-matplotlib' 'qt5-devel' 'libxkbfile' 'xorg-x11-font
 
 # -- 1.3 DNF Packages: development environments   ------------------------------
 pkg_dev_jupyter=('nodejs' 'python3-pip' 'python3-notebook' 'mathjax' 'sscg' 'git')
-pkg_dev_theia=('gcc-c++' 'make' 'python2' 'findutils' 'git' 'wget') #gcc-c++ make for node, python2 for yarn build and findutils for nvm
+pkg_dev_theia=('gcc-c++' 'make' 'python2' 'findutils' 'git' 'wget' 'yarn') #gcc-c++ make for node, python2 for yarn build and findutils for nvm
 pkg_dev_cli=('git' 'vim' 'emacs' 'tmux')
 
 # -- 1.3 DNF Packages: package managers   --------------------------------------
@@ -106,6 +106,7 @@ if [ "$DEV_JUPYTER" = "TRUE" ] ; then
   pkgs=("${pkgs[@]}" "${pkg_dev_jupyter[@]}") ; fi
 
 if [ "$DEV_THEIA" = "TRUE" ] ; then
+  curl --silent --location https://dl.yarnpkg.com/rpm/yarn.repo | tee /etc/yum.repos.d/yarn.repo # require to install yarn
   pkgs=("${pkgs[@]}" "${pkg_dev_theia[@]}") ; fi
 
 if [ "$DEV_CLI" = "TRUE" ] ; then
