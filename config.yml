@@ -19,13 +19,19 @@ build:
     LIB_OPENMPI: "FALSE"
     # ---- dev enviroment ------------------------------------------------------
     DEV_JUPYTER: "FALSE"
+    DEV_THEIA: "FALSE"
     DEV_CLI: "FALSE"
     # ---- package managers ----------------------------------------------------
     PKGM_SPACK: "FALSE"
+environment:
+  USE_LOCAL_GIT: "true" # used by theia (https://github.com/eclipse-theia/theia/issues/1964)
 mounts:
   - type: "bind"
     hostPath: "jupyter_config_dir"
     containerPath: "/home/user/.jupyter"
+  - type: "bind"
+    hostPath: "theia_config_dir"
+    containerPath: "/home/user/.theia"
 files:
   containerRoot: "/home/user"
 flags:
