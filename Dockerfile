@@ -13,6 +13,7 @@ ARG LIB_LINALG
 ARG LIB_OPENMPI
 # ---- dev environemnts --------------------------------------------------------
 ARG DEV_JUPYTER
+ARG DEV_THEIA
 ARG DEV_CLI
 # ---- Package Managers --------------------------------------------------------
 ARG PKGM_SPACK
