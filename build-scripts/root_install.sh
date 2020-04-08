@@ -41,7 +41,7 @@ pkg_manager="dnf"
 pkg_lang_c=('gcc' 'gcc-c++' 'gdb' 'make')
 pkg_lang_fortran=('gcc' 'gdb' 'make' 'gcc-gfortran')
 pkg_lang_python3=('python3' 'python3-numpy' 'python3-scipy' 'python3-sympy' 'python3-ipython' 'python3-pandas')
-pkg_lang_julia=('julia')
+pkg_lang_julia=('julia' 'libQtGui.so.4')
 pkg_lang_latex=('texlive-scheme-full')
 pkg_lang_R=('R')
 
