@@ -1,4 +1,4 @@
-FROM fedora:latest
+FROM fedora:31
 
 # ---- languages ---------------------------------------------------------------
 ARG LANG_C
