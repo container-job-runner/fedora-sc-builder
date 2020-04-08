@@ -35,10 +35,10 @@
 if [ "$LANG_JULIA" = "TRUE" ] ; then
   # ----> plotters
   if [ "$LIB_MATPLOTLIB" = "TRUE" ] ; then
-      julia -e 'import Pkg; Pkg.add("PyPlot")'
+      julia -e 'import Pkg; Pkg.add("PyPlot"); using PyPlot'
   fi
-  julia -e 'import Pkg; Pkg.add("Gadfly")'
-  julia -e 'import Pkg; Pkg.add("Plots")'
+  julia -e 'import Pkg; Pkg.add("Gadfly"); using Gadfly'
+  julia -e 'import Pkg; Pkg.add("Plots"); using Plots'
 fi
 
 # -- Juputer Kernels -----------------------------------------------------------
