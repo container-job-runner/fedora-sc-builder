@@ -76,7 +76,7 @@ if [ "$DEV_THEIA" = "TRUE" ] ; then
   alias python=python2
   mkdir -p $THEIA_INSTALL_DIR
   cd $THEIA_INSTALL_DIR
-  wget https://github.com/container-job-runner/stack-config-files/releases/download/0.1-alpha/package.json # get package.json file
+  wget https://github.com/container-job-runner/stack-config-files/releases/download/0.1.1-alpha/package.json # get package.json file
   yarn
   yarn build
   unalias python
@@ -93,4 +93,17 @@ if [ "$DEV_THEIA" = "TRUE" ] ; then
   cd "$PLUGIN_BUILD_DIR/vscode-fortran-support"
   npm install && vsce package
   cp linter-gfortran-2.1.0.vsix "$THEIA_INSTALL_DIR/plugins/linter-gfortran-2.1.0.vsix"
+  # --> atom dark pro
+  cd $PLUGIN_BUILD_DIR
+  git clone https://github.com/Binaryify/OneDark-Pro.git --depth 1
+  cd "$PLUGIN_BUILD_DIR/OneDark-Pro"
+  git checkout 96c807d9dbc0701e78fe5211e801de49a707e601
+  npm install
+  npm install marked
+  mv src/themes/editorTheme/onedarkPro.ts src/themes/editorTheme/oneDarkPro.ts # fix typescript compilation failure bug due to missing file
+  vsce package
+  cp material-theme-3.2.5.vsix "$THEIA_INSTALL_DIR/plugins/vscode-theme-onedark.vsix"
+  # --> remove build directory
+  cd $HOME
+  rm -rf $PLUGIN_BUILD_DIR
 fi
