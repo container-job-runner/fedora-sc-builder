@@ -64,4 +64,4 @@ USER $USER_NAME
 RUN chmod +x .build-scripts/user_install_extra.sh
 RUN .build-scripts/user_install_extra.sh
 
-ENTRYPOINT ["bash", "-c"]
+ENTRYPOINT ["bash", "-l", "-c"]
