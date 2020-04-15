@@ -11,6 +11,7 @@ ARG LANG_LATEX
 ARG LIB_MATPLOTLIB
 ARG LIB_LINALG
 ARG LIB_OPENMPI
+ARG LIB_X11
 # ---- dev environemnts --------------------------------------------------------
 ARG DEV_JUPYTER
 ARG DEV_THEIA
