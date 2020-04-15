@@ -37,7 +37,7 @@ if [ "$LANG_JULIA" = "TRUE" ] ; then
   if [ "$LIB_MATPLOTLIB" = "TRUE" ] ; then
       julia -e 'import Pkg; Pkg.add("PyPlot"); using PyPlot'
   fi
-  julia -e 'import Pkg; Pkg.add("Gadfly"); using Gadfly'
+  julia -e 'import Pkg; Pkg.add("GR"); using GR'
   julia -e 'import Pkg; Pkg.add("Plots"); using Plots'
 fi
 
