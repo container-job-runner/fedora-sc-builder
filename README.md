@@ -32,6 +32,7 @@ This stack creates a non-root user with matching user id and group id as the hos
    - Matplotlib
    - BLAS, LAPACK
    - OPENMPI
+   - x11
 3. **dev environments**
    - Jupyter notebook, Jupyter lab
    - Theia IDE
@@ -56,6 +57,7 @@ LANG_LATEX: "FALSE"
 LIB_MATPLOTLIB : "TRUE"
 LIB_LINALG : "FALSE"
 LIB_OPENMPI: "FALSE"
+LIB_X11: "FALSE"
 # ---- dev enviroment ------------------------------------------------------
 DEV_JUPYTER: "TRUE"
 DEV_THEIA: "FALSE"
