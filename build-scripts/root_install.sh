@@ -12,6 +12,8 @@
 #     LANG_JULIA      TRUE => Julia language installed
 #     LANG_R          TRUE => R languag installed
 #     LANG_LATEX      TRUE => Latex installed
+#     LANG_LATEX_PKG  STRING ("full" | "basic" | "small" | "medium" | "minimal")
+#                     changes the latex package.
 #
 # ---- libraries ---------------------------------------------------------------
 #     LIB_MATPLOTLIB  TRUE => matplotlib
@@ -43,8 +45,11 @@ pkg_lang_c=('gcc' 'gcc-c++' 'gdb' 'make')
 pkg_lang_fortran=('gcc' 'gdb' 'make' 'gcc-gfortran')
 pkg_lang_python3=('python3' 'python3-numpy' 'python3-scipy' 'python3-sympy' 'python3-ipython' 'python3-pandas')
 pkg_lang_julia=('julia' 'libQtGui.so.4')
-pkg_lang_latex=('texlive-scheme-full')
 pkg_lang_R=('R')
+if [ -z "$LANG_LATEX_PKG" ] ; then
+    LANG_LATEX_PKG='basic'
+fi
+pkg_lang_latex=("texlive-scheme-$LANG_LATEX_PKG")
 
 # ---> additional language dependancies for Jupyter
 if [ "$DEV_JUPYTER" = "TRUE" ] ; then
@@ -56,7 +61,7 @@ fi
 pkg_lib_linAlg=('liblas-devel' 'lapack-devel' 'fftw-devel')
 pkg_lib_openMPI=('environment-modules' 'openmpi-devel')
 pkg_lib_matPlotLib=('python3-matplotlib' 'qt5-devel' 'libxkbfile' 'xorg-x11-fonts-misc' 'xorg-x11-xbitmaps')
-pkg_lib_x11=('xorg-x11-apps', 'xorg-x11-xauth', 'xorg-x11-fonts*', 'Xvfb')
+pkg_lib_x11=('xorg-x11-apps' 'xorg-x11-xauth' 'xorg-x11-fonts*' 'Xvfb')
 
 # -- 1.3 DNF Packages: development environments   ------------------------------
 pkg_dev_jupyter=('nodejs' 'python3-pip' 'python3-notebook' 'mathjax' 'sscg' 'git')
