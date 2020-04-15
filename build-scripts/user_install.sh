@@ -34,11 +34,14 @@
 # -- Julia Packages ------------------------------------------------------------
 if [ "$LANG_JULIA" = "TRUE" ] ; then
   # ----> plotters
-  if [ "$LIB_MATPLOTLIB" = "TRUE" ] ; then
-      julia -e 'import Pkg; Pkg.add("PyPlot"); using PyPlot'
-  fi
-  julia -e 'import Pkg; Pkg.add("GR"); using GR'
-  julia -e 'import Pkg; Pkg.add("Plots"); using Plots'
+    if [ "$LIB_MATPLOTLIB" = "TRUE" ] ; then
+        julia -e 'import Pkg; Pkg.add("PyPlot"); using PyPlot'
+    fi
+    if [ "$LIB_X11" = "TRUE" ] ; then
+        julia -e 'import Pkg; Pkg.add("LaTeXStrings"); using LaTeXStrings'
+    fi
+    julia -e 'import Pkg; Pkg.add("GR"); using GR'
+    julia -e 'import Pkg; Pkg.add("Plots"); using Plots'
 fi
 
 # -- Juputer Kernels -----------------------------------------------------------
