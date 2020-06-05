@@ -66,11 +66,11 @@ DEV_CLI: "FALSE"
 the stack will contain basic language dependencies for c, c++, python, the matplotlib library and Jupyter. Note that after changing the params you will need to rebuild the stack (e.g. `cjr stack:build stack-fedora-basic`)
 
 Additional dependencies can be installed by modifying the files
-- build-scripts/root_install_extra.sh
-- build-scripts/user_install_extra.sh
+- build/scripts/root-install-extra.sh
+- build/scripts/user-install-extra.sh
 
-To modify the package install process, modify the files
-- build-scripts/root_install.sh
-- build-scripts/user_install.sh
+To modify the main package install process, modify the files
+- build/scripts/root-install.sh
+- build/scripts/user-install.sh
 
 Finally, the non-root user's username, password, and sudo privileges can be modified by adjusting the user args in config.yml
