@@ -169,16 +169,9 @@ if [ "$DEV_JUPYTER" = "TRUE" ] ; then
     R -e 'r = getOption("repos"); r["CRAN"] = "https://cloud.r-project.org/"; install.packages(c("repr", "IRdisplay", "IRkernel"), repos = r, type = "source");'
   fi
   if [ "$LANG_FORTRAN" = "TRUE" ] ; then
-    echo "Fortran Coarray not yet supported"
-    # caf (fortran coarrays) not installing properly. Resources: https://github.com/openhpc/ohpc/issues/884
-    # https://github.com/sourceryinstitute/OpenCoarrays/blob/master/INSTALL.md
-    # https://md2pdf.herokuapp.com/sourceryinstitute/opencoarrays/blob/master/INSTALL.md
-    # another alternative is: (https://lfortran.org/ https://docs.lfortran.org/installation/) and (https://github.com/mgaitan/fortran_magic - calls fortran from python - not a kernel)
-    #
-    # cd /opt
-    # git clone https://github.com/sourceryinstitute/jupyter-CAF-kernel
-    # cd jupyter-CAF-kernel
-    # pip install -e prebuild/jupyter-caf-kernel
-    # jupyter-kernelspec install prebuild/jupyter-caf-kernel/Coarray-Fortran/
+    # possible options to add later:
+    # 1. fortran coarrays   https://github.com/sourceryinstitute/OpenCoarrays/blob/master/INSTALL.md
+    # 2. lfortran:          https://lfortran.org/ https://docs.lfortran.org/installation/
+    # 3. fortran_magic      https://github.com/mgaitan/fortran_magic
   fi
 fi
