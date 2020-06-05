@@ -16,7 +16,7 @@ ARG LIB_X11
 ARG DEV_JUPYTER
 ARG DEV_THEIA
 ARG DEV_CLI
-# ----> ARGS: package managers 
+# ----> ARGS: package managers
 ARG PKGM_SPACK
 
 # -- copy root install files to /opt/build-scripts -----------------------------
@@ -46,7 +46,8 @@ RUN if [ "$GRANT_SUDO" = "TRUE" ] ; \
 # -- copy user install scripts to ~/.build-scripts -----------------------------
 RUN mkdir "/home/$USER_NAME/.build-scripts"
 WORKDIR "/home/$USER_NAME/.build-scripts"
-COPY --chown=$USER_ID:$GROUP_ID scripts/user-install.sh scripts/user-install-extra.sh ./
+COPY scripts/user-install.sh scripts/user-install-extra.sh ./
+RUN chown $USER_ID:$GROUP_ID user-install.sh user-install-extra.sh
 USER $USER_NAME
 RUN chmod +x user-install.sh user-install-extra.sh
 # -- install user dependencies -------------------------------------------------
