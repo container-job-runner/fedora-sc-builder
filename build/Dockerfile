@@ -21,7 +21,7 @@ ARG PKGM_SPACK
 
 # -- install root dependencies -------------------------------------------------
 RUN mkdir /build-scripts
-COPY build-scripts/root_install.sh /build-scripts
+COPY scripts/root_install.sh /build-scripts
 RUN chmod +x /build-scripts/root_install.sh
 RUN /build-scripts/root_install.sh
 
@@ -45,7 +45,7 @@ RUN if [ "$GRANT_SUDO" = "TRUE" ] ; \
 # -- Set up user user dependancies ---------------------------------------------
 WORKDIR /home/$USER_NAME
 RUN mkdir .build-scripts
-COPY build-scripts/user_install.sh .build-scripts
+COPY scripts/user_install.sh .build-scripts
 RUN chown -R $USER_NAME: .build-scripts
 USER $USER_NAME
 RUN chmod +x .build-scripts/user_install.sh
@@ -54,12 +54,12 @@ RUN .build-scripts/user_install.sh
 # -- install extra root & user dependencies here (Prevents full rebuild)--------
 USER root
 WORKDIR /
-COPY build-scripts/root_install_extra.sh /build-scripts
+COPY scripts/root_install_extra.sh /build-scripts
 RUN chmod +x /build-scripts/root_install_extra.sh
 RUN /build-scripts/root_install_extra.sh
 
 WORKDIR "/home/$USER_NAME"
-COPY build-scripts/user_install_extra.sh .build-scripts
+COPY scripts/user_install_extra.sh .build-scripts
 RUN chown -R $USER_NAME: .build-scripts
 USER $USER_NAME
 RUN chmod +x .build-scripts/user_install_extra.sh
