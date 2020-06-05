@@ -1,32 +1,33 @@
 FROM fedora:31
 
-# ---- languages ---------------------------------------------------------------
+# ----> ARGS: languages
 ARG LANG_C
 ARG LANG_FORTRAN
 ARG LANG_PYTHON3
 ARG LANG_JULIA
 ARG LANG_R
 ARG LANG_LATEX
-# ---- libraries ---------------------------------------------------------------
+# ----> ARGS: libraries
 ARG LIB_MATPLOTLIB
 ARG LIB_LINALG
 ARG LIB_OPENMPI
 ARG LIB_X11
-# ---- dev environemnts --------------------------------------------------------
+# ----> ARGS: dev environemnts
 ARG DEV_JUPYTER
 ARG DEV_THEIA
 ARG DEV_CLI
-# ---- Package Managers --------------------------------------------------------
+# ----> ARGS: package managers 
 ARG PKGM_SPACK
 
+# -- copy root install files to /opt/build-scripts -----------------------------
+RUN mkdir -p /opt/build-scripts
+WORKDIR /opt/build-scripts
+COPY scripts/root-install.sh scripts/root-install-extra.sh ./
+RUN chmod +x root-install.sh root-install-extra.sh
 # -- install root dependencies -------------------------------------------------
-RUN mkdir /build-scripts
-COPY scripts/root_install.sh /build-scripts
-RUN chmod +x /build-scripts/root_install.sh
-RUN /build-scripts/root_install.sh
+RUN ./root-install.sh
 
-# -- User arguments ------------------------------------------------------------
-# Set USER_ID = $(id -u) and GROUP_ID = $(id -g) for correct bind permissions
+# ----> ARGS: user (placed here to prevent full rebuild)
 ARG USER_NAME=user
 ARG USER_PASSWORD=password
 ARG GRANT_SUDO=false
@@ -36,33 +37,28 @@ ARG GROUP_ID
 # -- Generate restricted user account ------------------------------------------
 RUN dnf install -y shadow-utils passwd cracklib-dicts
 RUN if [ -z "$USER_ID" ] || [ -z "$GROUP_ID" ] ; \
-  then useradd -m -l -s /bin/bash $USER_NAME ; \
-  else (groupadd -o --gid $GROUP_ID $USER_NAME) && (useradd -m -l -o -s /bin/bash --uid $USER_ID --gid $GROUP_ID $USER_NAME) ; fi
+  then useradd -ml -s /bin/bash $USER_NAME ; \
+  else (groupadd -o --gid $GROUP_ID $USER_NAME) && (useradd -mlo -s /bin/bash --uid $USER_ID --gid $GROUP_ID $USER_NAME) ; fi
 RUN echo "$USER_NAME:$USER_PASSWORD" | chpasswd
 RUN if [ "$GRANT_SUDO" = "TRUE" ] ; \
   then (usermod -aG wheel $USER_NAME) ; fi
 
-# -- Set up user user dependancies ---------------------------------------------
-WORKDIR /home/$USER_NAME
-RUN mkdir .build-scripts
-COPY scripts/user_install.sh .build-scripts
-RUN chown -R $USER_NAME: .build-scripts
+# -- copy user install scripts to ~/.build-scripts -----------------------------
+RUN mkdir "/home/$USER_NAME/.build-scripts"
+WORKDIR "/home/$USER_NAME/.build-scripts"
+COPY --chown=$USER_ID:$GROUP_ID scripts/user-install.sh scripts/user-install-extra.sh ./
 USER $USER_NAME
-RUN chmod +x .build-scripts/user_install.sh
-RUN .build-scripts/user_install.sh
+RUN chmod +x user-install.sh user-install-extra.sh
+# -- install user dependencies -------------------------------------------------
+RUN ./user-install.sh
 
-# -- install extra root & user dependencies here (Prevents full rebuild)--------
+# -- install extra root dependencies (placed here to prevent full rebuild) -----
 USER root
-WORKDIR /
-COPY scripts/root_install_extra.sh /build-scripts
-RUN chmod +x /build-scripts/root_install_extra.sh
-RUN /build-scripts/root_install_extra.sh
+RUN /opt/build-scripts/root-install-extra.sh
+
+# -- install extra user dependencies (placed here to prevent full rebuild) -----
+USER $USER_NAME
+RUN /home/$USER_NAME/.build-scripts/user-install-extra.sh
 
 WORKDIR "/home/$USER_NAME"
-COPY scripts/user_install_extra.sh .build-scripts
-RUN chown -R $USER_NAME: .build-scripts
-USER $USER_NAME
-RUN chmod +x .build-scripts/user_install_extra.sh
-RUN .build-scripts/user_install_extra.sh
-
 ENTRYPOINT ["bash", "-l", "-c"]
