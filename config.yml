@@ -30,10 +30,10 @@ environment:
   USE_LOCAL_GIT: "true" # used by theia (https://github.com/eclipse-theia/theia/issues/1964)
 mounts:
   - type: "bind"
-    hostPath: "jupyter_config_dir"
+    hostPath: "config/jupyter"
     containerPath: "/home/user/.jupyter"
   - type: "bind"
-    hostPath: "theia_config_dir"
+    hostPath: "config/theia"
     containerPath: "/home/user/.theia"
 files:
   containerRoot: "/home/user"
