@@ -66,47 +66,12 @@ fi
 
 # -----> Theia
 if [ "$DEV_THEIA" = "TRUE" ] ; then
-  THEIA_INSTALL_DIR=~/.local/lib/theia
-  THEIA_PATH_DIR=~/.local/bin
-  PLUGIN_BUILD_DIR=~/.local/tmp/vs-plugins
   # --> install nvm
   curl --silent -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh | bash
   source ~/.bash_profile
   # --> install latest node 10 (dubnium)
   nvm install lts/dubnium
   nvm use lts/dubnium
-  # --> install theia
-  alias python=python2
-  mkdir -p $THEIA_INSTALL_DIR
-  cd $THEIA_INSTALL_DIR
-  wget https://github.com/container-job-runner/stack-config-files/releases/download/0.1.1-alpha/package.json # get package.json file
-  yarn
-  yarn build
-  unalias python
-  # --> make a shell script for launching theia
-  mkdir -p $THEIA_PATH_DIR
-  echo -e '#!/bin/bash\nyarn --cwd '$(pwd)' start $@' >> "$THEIA_PATH_DIR/theia"
-  chmod a+x "$THEIA_PATH_DIR/theia"
-  # --> add additional plugins
-  npm install -g vsce # install visual code plugin
-  mkdir -p $PLUGIN_BUILD_DIR
-  # --> fortran plugin
-  cd $PLUGIN_BUILD_DIR
-  git clone https://github.com/krvajal/vscode-fortran-support.git --branch 2.1.0 --depth 1
-  cd "$PLUGIN_BUILD_DIR/vscode-fortran-support"
-  npm install && vsce package
-  cp linter-gfortran-2.1.0.vsix "$THEIA_INSTALL_DIR/plugins/linter-gfortran-2.1.0.vsix"
-  # --> atom dark pro
-  cd $PLUGIN_BUILD_DIR
-  git clone https://github.com/Binaryify/OneDark-Pro.git --depth 1
-  cd "$PLUGIN_BUILD_DIR/OneDark-Pro"
-  git checkout 96c807d9dbc0701e78fe5211e801de49a707e601
-  npm install
-  npm install marked
-  mv src/themes/editorTheme/onedarkPro.ts src/themes/editorTheme/oneDarkPro.ts # fix typescript compilation failure bug due to missing file
-  vsce package
-  cp material-theme-3.2.5.vsix "$THEIA_INSTALL_DIR/plugins/vscode-theme-onedark.vsix"
-  # --> remove build directory
-  cd $HOME
-  rm -rf $PLUGIN_BUILD_DIR
+  # --> install yarn
+  npm install -g yarn
 fi

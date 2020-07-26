@@ -1,3 +1,29 @@
+ARG DEV_THEIA
+ARG THEIA_INSTALL_DIR=/opt/theia
+
+# == 1. build stage: Theia =====================================================
+FROM fedora:31 as theia_builder
+ARG DEV_THEIA
+ARG THEIA_INSTALL_DIR
+WORKDIR /root/theia
+RUN if [ "$DEV_THEIA" = "TRUE" ] ; then \
+    dnf install -y wget make g++ ; \
+    # --> install nvm
+    curl --silent -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh | bash ; \
+    source ~/.bash_profile ; \
+    # --> install latest node 10 (dubnium)
+    nvm install lts/dubnium ; \
+    nvm use lts/dubnium ; \
+    # --> install yarn
+    npm install -g yarn ; \
+    wget https://github.com/container-job-runner/stack-config-files/releases/download/0.1.3-alpha/package.json ; \
+    yarn ; \
+    yarn prepare ; \
+    fi
+RUN echo -e '#!/bin/bash\nyarn --cwd '$THEIA_INSTALL_DIR' start $@' > /root/theia_launcher ; \
+    chmod a+x /root/theia_launcher ;
+
+# == 2. main Dockerfile: Fedora ================================================
 FROM fedora:31
 
 # ----> ARGS: languages
@@ -18,6 +44,8 @@ ARG DEV_THEIA
 ARG DEV_CLI
 # ----> ARGS: package managers
 ARG PKGM_SPACK
+# ----> ARGS: additional options
+ARG THEIA_INSTALL_DIR
 
 # -- copy root install files to /opt/build-scripts -----------------------------
 RUN mkdir -p /opt/build-scripts
@@ -26,6 +54,8 @@ COPY scripts/root-install.sh scripts/root-install-extra.sh ./
 RUN chmod +x root-install.sh root-install-extra.sh
 # -- install root dependencies -------------------------------------------------
 RUN ./root-install.sh
+COPY --from=theia_builder /root/theia $THEIA_INSTALL_DIR
+COPY --from=theia_builder /root/theia_launcher /usr/local/bin/theia
 
 # ----> ARGS: user (placed here to prevent full rebuild)
 ARG USER_NAME=user
