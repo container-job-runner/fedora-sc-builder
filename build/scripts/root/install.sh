@@ -53,7 +53,6 @@ pkg_lang_latex=("texlive-scheme-$LANG_LATEX_PKG")
 
 # ---> additional language dependancies for Jupyter
 if [ "$DEV_JUPYTER" = "TRUE" ] ; then
-  pkg_lang_fortran=("${pkg_lang_fortran[@]}" 'OpenCoarrays' 'mpich' 'openmpi-devel') # https://github.com/sourceryinstitute/jupyter-CAF-kernel
   pkg_lang_R=("${pkg_lang_R[@]}" 'czmq-devel' 'libcurl-devel' 'openssl-devel')  # https://irkernel.github.io/installation/#linux-panel
 fi
 
