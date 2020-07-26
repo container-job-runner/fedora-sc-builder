@@ -65,13 +65,7 @@ ARG USER_ID
 ARG GROUP_ID
 
 # -- Generate restricted user account ------------------------------------------
-RUN dnf install -y shadow-utils passwd cracklib-dicts
-RUN if [ -z "$USER_ID" ] || [ -z "$GROUP_ID" ] ; \
-  then useradd -ml -s /bin/bash $USER_NAME ; \
-  else (groupadd -o --gid $GROUP_ID $USER_NAME) && (useradd -mlo -s /bin/bash --uid $USER_ID --gid $GROUP_ID $USER_NAME) ; fi
-RUN echo "$USER_NAME:$USER_PASSWORD" | chpasswd
-RUN if [ "$GRANT_SUDO" = "TRUE" ] ; \
-  then (usermod -aG wheel $USER_NAME) ; fi
+RUN /opt/build-scripts/add-user.sh
 
 # -- copy user install scripts to ~/.build-scripts -----------------------------
 RUN mkdir "/home/$USER_NAME/.build-scripts"
