@@ -50,10 +50,10 @@ ARG THEIA_INSTALL_DIR
 # -- copy root install files to /opt/build-scripts -----------------------------
 RUN mkdir -p /opt/build-scripts
 WORKDIR /opt/build-scripts
-COPY scripts/root-install.sh scripts/root-install-extra.sh ./
-RUN chmod +x root-install.sh root-install-extra.sh
+COPY scripts/root/ ./
+RUN chmod +x *
 # -- install root dependencies -------------------------------------------------
-RUN ./root-install.sh
+RUN ./install.sh
 COPY --from=theia_builder /root/theia $THEIA_INSTALL_DIR
 COPY --from=theia_builder /root/theia_launcher /usr/local/bin/theia
 
@@ -76,20 +76,20 @@ RUN if [ "$GRANT_SUDO" = "TRUE" ] ; \
 # -- copy user install scripts to ~/.build-scripts -----------------------------
 RUN mkdir "/home/$USER_NAME/.build-scripts"
 WORKDIR "/home/$USER_NAME/.build-scripts"
-COPY scripts/user-install.sh scripts/user-install-extra.sh ./
-RUN chown $USER_ID:$GROUP_ID user-install.sh user-install-extra.sh
+COPY scripts/user/ ./
+RUN chown $USER_ID:$GROUP_ID *
 USER $USER_NAME
-RUN chmod +x user-install.sh user-install-extra.sh
+RUN chmod +x *
 # -- install user dependencies -------------------------------------------------
-RUN ./user-install.sh
+RUN ./install.sh
 
 # -- install extra root dependencies (placed here to prevent full rebuild) -----
 USER root
-RUN /opt/build-scripts/root-install-extra.sh
+RUN /opt/build-scripts/install-extra.sh
 
 # -- install extra user dependencies (placed here to prevent full rebuild) -----
 USER $USER_NAME
-RUN /home/$USER_NAME/.build-scripts/user-install-extra.sh
+RUN /home/$USER_NAME/.build-scripts/install-extra.sh
 
 WORKDIR "/home/$USER_NAME"
 ENTRYPOINT ["bash", "-l", "-c"]
