@@ -3,6 +3,31 @@
 
 A cjr stack based on Fedora and dnf.
 
+## Description
+
+This stack creates a non-root user with matching user id and group id as the host user, and uses dnf to install basic support for any subset of the following:
+
+1. **Languages**
+   - c, c++
+   - Fortran
+   - Python 3
+   - Julia
+   - R
+   - Latex
+2. **Libraries**
+   - Matplotlib
+   - BLAS, LAPACK
+   - OPENMPI
+   - X11
+3. **Dev Environments**
+   - Jupyter notebook, Jupyter lab
+   - Theia
+   - vim, git, vim, emacs, tmux
+4. **Package Managers**
+   - spack
+
+The configurations for Jupyter and Theia are respectively stored the directories config/jupyter and config/theia which are bound to ~/.jupyter and ~/.theia in the container.
+
 ## Installation
 
 To use use this stack with cjr simply run the command
@@ -15,36 +40,11 @@ You can then build the stack by running
 ```console
 cjr stack:build stack-fedora-basic
 ```
-To configure the software list see [the customization section](#Customization) below.
-
-## Description
-
-This stack creates a non-root user with matching user id and group id as the host user, and uses dnf to install basic support for any subset of the following:
-
-1. **Languages**
-   - c, c++
-   - Fortran
-   - Python 3
-   - Julia
-   - R
-   - latex
-2. **Libraries**
-   - Matplotlib
-   - BLAS, LAPACK
-   - OPENMPI
-   - x11
-3. **dev environments**
-   - Jupyter notebook, Jupyter lab
-   - Theia IDE
-   - vim, git, vim, emacs, tmux
-4. **Package Managers**
-   - spack
-
-Note: configuration for Jupyter is stored in a bound folder inside the stack directory.
+**By default this stack does not install any dependencies**. To configure the software list see the following [customization](#Customization) section.
 
 ## Customization
 
-**By default this stack does not install any dependencies**. By editing the args in config.yml and setting fields to `TRUE` you can enable any of the items listed above. For example, by changing the following fields in config.yml
+By editing the args in config.yml and setting fields to `TRUE` you can enable any of the items listed above. For example, by changing the following fields in config.yml
 ```yaml
 # ---- languages -----------------------------------------------------------
 LANG_C: "TRUE"
@@ -66,11 +66,26 @@ DEV_CLI: "FALSE"
 the stack will contain basic language dependencies for c, c++, python, the matplotlib library and Jupyter. Note that after changing the params you will need to rebuild the stack (e.g. `cjr stack:build stack-fedora-basic`)
 
 Additional dependencies can be installed by modifying the files
-- build/scripts/root-install-extra.sh
-- build/scripts/user-install-extra.sh
+- build/scripts/root/install-extra.sh
+- build/scripts/user/install-extra.sh
 
 To modify the main package install process, modify the files
-- build/scripts/root-install.sh
-- build/scripts/user-install.sh
+- build/scripts/root/install.sh
+- build/scripts/user/install.sh
 
-Finally, the non-root user's username, password, and sudo privileges can be modified by adjusting the user args in config.yml
+**Profiles**: This stack contains the following profiles:
+
+- all : installs everything.
+- dynamic: enables dynamic uid and gid on container startup to match host user.
+- *LANGUAGE-IDE* where LANGUAGE can be either 'fortran', 'python', or 'julia' and IDE can be 'jupyter' or 'theia'.
+
+**Theia Plugins**:
+Additional plugins can be installed by adding .vsix extension files to the directory config/theia/plugins. Note that Theia does not yet support all vs code extensions correctly, especially the latest versions. Several recommended extensions and their versions are:
+
+- *Python*: [vscode-python](https://github.com/microsoft/vscode-python), version [2019.11.50794](https://github.com/microsoft/vscode-python/releases/tag/2019.11.50794).
+- *Julia*: [julia-vscode](https://github.com/julia-vscode/julia-vscode), version [0.15.40](https://github.com/julia-vscode/julia-vscode/releases/tag/v0.15.40).
+- *C/C++*: [vscode-cpptools](https://github.com/Microsoft/vscode-cpptools), version [0.28.3](https://github.com/microsoft/vscode-cpptools/releases/tag/0.28.3).
+- *Fortran*: [Modern Fortran](https://github.com/krvajal/vscode-fortran-support), version [2.2.1](https://marketplace.visualstudio.com/items?itemName=krvajalm.linter-gfortran). (Requires vscode-cpptools)
+
+**User Settings**: 
+The container user's username, password, and sudo privileges can also be modified by adjusting the user args in config.yml
