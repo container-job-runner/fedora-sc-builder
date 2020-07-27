@@ -139,7 +139,6 @@ fi
 
 # -----> Jupyter
 if [ "$DEV_JUPYTER" = "TRUE" ] ; then
-  pip3 install --upgrade pip # upgrade pip (important for pyQtk5 library - otherwise quits)
   pip3 install jupyterlab # Jupyter Lab
   # --> install atom dark theme -------------------------------------------------
   cd /opt
