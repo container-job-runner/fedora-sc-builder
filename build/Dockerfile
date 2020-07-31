@@ -16,7 +16,8 @@ RUN if [ "$DEV_THEIA" = "TRUE" ] ; then \
     nvm use lts/dubnium ; \
     # --> install yarn
     npm install -g yarn ; \
-    wget https://github.com/container-job-runner/stack-config-files/releases/download/0.1.3-alpha/package.json ; \
+    wget https://github.com/container-job-runner/stack-config-files/releases/download/0.1.4-alpha/package.json ; \
+    wget https://github.com/container-job-runner/stack-config-files/releases/download/0.1.4-alpha/yarn.lock ; \
     yarn ; \
     yarn prepare ; \
     fi
