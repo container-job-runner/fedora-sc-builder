@@ -18,8 +18,10 @@ RUN if [ "$DEV_THEIA" = "TRUE" ] ; then \
     npm install -g yarn ; \
     wget https://github.com/container-job-runner/stack-config-files/releases/download/0.1.4-alpha/package.json ; \
     wget https://github.com/container-job-runner/stack-config-files/releases/download/0.1.4-alpha/yarn.lock ; \
-    yarn ; \
-    yarn prepare ; \
+    yarn --cache-folder ./ycache ; \
+    rm -rf ./ycache ; \
+    yarn theia build ; \
+    yarn theia download:plugins ; \
     fi
 RUN echo -e '#!/bin/bash\nyarn --cwd '$THEIA_INSTALL_DIR' start $@' > /root/theia_launcher ; \
     chmod a+x /root/theia_launcher ;
