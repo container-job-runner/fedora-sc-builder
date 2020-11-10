@@ -47,7 +47,7 @@ pkg_manager="dnf"
 pkg_lang_c=('gcc' 'gcc-c++' 'gdb' 'redhat-rpm-config') #" redhat-rpm-config prevents gcc: error: /usr/lib/rpm/redhat/redhat-hardened-cc1: No such file or directory" workaround
 pkg_lang_fortran=('gcc' 'gdb' 'make' 'gcc-gfortran')
 pkg_lang_python3=('python3' 'python3-devel' 'python3-pip' 'python3-numpy' 'python3-scipy' 'python3-sympy' 'python3-ipython' 'python3-pandas')
-pkg_lang_julia=('julia' 'libQtGui.so.4')
+pkg_lang_julia=('julia' 'libunwind' 'libQtGui.so.4')
 pkg_lang_R=('R')
 pkg_lang_octave=('octave' 'octave-devel' 'gcc-c++' 'make' 'redhat-rpm-config' 'diffutils' 'git') # remove git once https://github.com/carlodefalco/octave-mpi/issues/4 is resolved
 if [ -z "$LANG_LATEX_PKG" ] ; then
