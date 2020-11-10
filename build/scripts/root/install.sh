@@ -219,3 +219,8 @@ if [ "$LANG_OCTAVE" = "TRUE" ] ; then
         # ----------------------------------------------------------------------
     fi
 fi
+
+# -----> Theia
+if [ "$DEV_THEIA" = "TRUE" ] && [ "$LANG_PYTHON3" = "TRUE" ] ; then
+    pip3 install pylint
+fi
