@@ -28,8 +28,9 @@
 #     DEV_THEIA       TRUE -> Theia IDE with support for selected languages.
 #     DEV_CLI         TRUE => CLI development tools: git, tmux, vim, emac
 #
-# ---- Package Managers --------------------------------------------------------
-#     PKGM_SPACK      TRUE => Spack
+# ---- Software ----------------------------------------------------------------
+#     ASW_SPACK       TRUE => Spack
+#     ASW_VNC         TRUE => Tiger VNC
 #
 # NOTE: To add extra dependancies for any language, library, or development
 # environment that can be installed with dnf simply add an entry to the arrays
@@ -70,7 +71,8 @@ pkg_dev_theia=()
 pkg_dev_cli=('git' 'vim' 'emacs' 'tmux')
 
 # -- 1.3 DNF Packages: package managers   --------------------------------------
-pkg_pkgm_spack=('python3' 'gcc' 'make' 'git' 'curl' 'gnupg2')
+pkg_asw_spack=('python3' 'gcc' 'make' 'git' 'curl' 'gnupg2')
+pkg_asw_vnc=('tigervnc-server' '@xfce-desktop-environment')
 
 # -- Add packages to dnfPkg array ----------------------------------------------
 declare -a pkgs=();
@@ -125,10 +127,13 @@ if [ "$DEV_THEIA" = "TRUE" ] ; then
 if [ "$DEV_CLI" = "TRUE" ] ; then
   pkgs=("${pkgs[@]}" "${pkg_dev_cli[@]}") ; fi
 
-# ----> package managers
+# ----> additional software
 
-if [ "$PKGM_SPACK" = "TRUE" ] ; then
-  pkgs=("${pkgs[@]}" "${pkg_pkgm_spack[@]}") ; fi
+if [ "$ASW_SPACK" = "TRUE" ] ; then
+  pkgs=("${pkgs[@]}" "${pkg_asw_spack[@]}") ; fi
+
+if [ "$ASW_VNC" = "TRUE" ] ; then
+  pkgs=("${pkgs[@]}" "${pkg_asw_vnc[@]}") ; fi
 
 # -- remove redundant elements then install (requires bash 4+) -----------------
 declare -A pkgsUniq

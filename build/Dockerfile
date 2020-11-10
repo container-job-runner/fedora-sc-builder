@@ -46,8 +46,9 @@ ARG LIB_X11
 ARG DEV_JUPYTER
 ARG DEV_THEIA
 ARG DEV_CLI
-# ----> ARGS: package managers
-ARG PKGM_SPACK
+# ----> ARGS: additional software
+ARG ASW_SPACK
+ARG ASW_VNC
 # ----> ARGS: additional options
 ARG THEIA_INSTALL_DIR
 
