@@ -33,7 +33,7 @@
 # Certain Julia Packages do not install as root. Install them here instead
 # -- Julia Packages ------------------------------------------------------------
 if [ "$LANG_JULIA" = "TRUE" ] ; then
-  # ----> plotters
+    # ----> plotters
     if [ "$LIB_MATPLOTLIB" = "TRUE" ] ; then
         julia -e 'import Pkg; Pkg.add("PyPlot"); using PyPlot'
     fi
@@ -44,6 +44,12 @@ if [ "$LANG_JULIA" = "TRUE" ] ; then
     # ----> debug and language server
     julia -e 'import Pkg; Pkg.add("LanguageServer"); using LanguageServer'
     julia -e 'import Pkg; Pkg.add("JuliaInterpreter"); using JuliaInterpreter'
+    # -----> MPI.jl (https://github.com/JuliaParallel/MPI.jl)
+    if [ "$LIB_OPENMPI" = "TRUE" ] ; then
+        source /etc/profile.d/modules.sh
+        module load mpi/openmpi-x86_64
+        julia -e 'ENV["JULIA_MPI_BINARY"]="system"; import Pkg; Pkg.add("MPI"); using MPI'
+    fi
 fi
 
 # -- Juputer Kernels -----------------------------------------------------------
