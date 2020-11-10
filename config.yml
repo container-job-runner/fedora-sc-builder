@@ -7,7 +7,7 @@ build:
     # ---- user ----------------------------------------------------------------
     USER_NAME: "user"
     USER_PASSWORD: "password"
-    GRANT_SUDO: "TRUE"
+    GRANT_SUDO: "PASSWORDLESS" # PASSWORDLESS, TRUE, or FALSE
     # ---- languages -----------------------------------------------------------
     LANG_C: "FALSE"
     LANG_FORTRAN: "FALSE"

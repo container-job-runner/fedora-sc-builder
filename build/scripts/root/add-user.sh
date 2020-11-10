@@ -3,11 +3,14 @@
 # -- USER CREATE SCRIPT -------------------------------------------------------
 # Adds a non root user. It responds to the following environmental variables:
 #
-#     USER_ID         ID for new linux user
-#     GROUP_ID        Group ID for new linux user
-#     USER_NAME       username for new linux user
-#     USER_PASSWORD   password for new linux user
-#     GRANT_SUDO      if "TRUE" then new linux user will have sudo privilages
+#     USER_ID           ID for new linux user
+#     GROUP_ID          Group ID for new linux user
+#     USER_NAME         username for new linux user
+#     USER_PASSWORD     password for new linux user
+#     GRANT_SUDO        if "PASSWORDLESS" or TRUE" then the new linux user will 
+#                       have sudo privilages. PASSWORDLESS enables passwordless 
+#                       sudo, TRUE enables password-based sudo unless password 
+#                       is empty in which case it grades passwordless sudo.
 # ------------------------------------------------------------------------------
 
 dnf install -y shadow-utils passwd cracklib-dicts
@@ -26,15 +29,14 @@ if [ -n "$USER_PASSWORD" ] ; then
 fi
 
 # -- Grant sudo ----------------------------------------------------------------
-if [ "$GRANT_SUDO" = "TRUE" ] ; then
-    if [ -n "$USER_PASSWORD" ] ; then
-        (usermod -aG wheel $USER_NAME)
-    else
-        groupadd wheelnopw
-        usermod -aG wheelnopw $USER_NAME
-        # Fedora /etc/sudoers file already has "#includedir /etc/sudoers.d" for user modifications
-        # Here we add a new config file that grants the group wheelnopw passwordless sudo
-        SUDOCONFIG="## No password sudo group\n%wheelnopw        ALL=(ALL)       NOPASSWD: ALL"
-        echo -e $SUDOCONFIG >> /etc/sudoers.d/npconfig
-    fi
+# passwordless sudo if PASSWORDLESS is specified, or if TRUE is specified and user password is empty
+if [[ "$GRANT_SUDO" = "PASSWORDLESS" ||  ( "$GRANT_SUDO" = "TRUE" && -z "$USER_PASSWORD" ) ]] ; then    
+    groupadd wheelnopw
+    usermod -aG wheelnopw $USER_NAME
+    # Fedora /etc/sudoers file already has "#includedir /etc/sudoers.d" for user modifications
+    # Here we add a new config file that grants the group wheelnopw passwordless sudo
+    SUDOCONFIG="## No password sudo group\n%wheelnopw        ALL=(ALL)       NOPASSWD: ALL"
+    echo -e $SUDOCONFIG >> /etc/sudoers.d/npconfig
+elif [ "$GRANT_SUDO" = "TRUE" ] ; then
+    usermod -aG wheel $USER_NAME
 fi
