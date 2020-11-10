@@ -223,7 +223,7 @@ fi
 if [ "$LANG_PYTHON3" = "TRUE" ] && [ "$LIB_OPENMPI" = "TRUE" ] ; then
     source /etc/profile.d/modules.sh
     module load mpi/openmpi-x86_64
-    pip3 install mpi4py
+    pip3 install mpi4py # https://mpi4py.readthedocs.io/en/stable/install.html
 fi
 
 # -----> Theia
