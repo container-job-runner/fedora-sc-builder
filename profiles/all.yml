@@ -12,6 +12,7 @@ build:
     LIB_LINALG : "TRUE"
     LIB_OPENMPI: "TRUE"
     LIB_X11: "TRUE"
+    LIB_RAY: "TRUE"
     # ---- dev enviroment ------------------------------------------------------
     DEV_JUPYTER: "TRUE"
     DEV_THEIA: "TRUE"
