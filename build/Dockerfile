@@ -9,17 +9,18 @@ WORKDIR /root/theia
 RUN if [ "$DEV_THEIA" = "TRUE" ] ; then \
     dnf install -y wget make g++ ; \
     # --> install nvm
-    curl --silent -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh | bash ; \
+    curl --silent -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.37.0/install.sh | bash ; \
     source ~/.bash_profile ; \
-    # --> install latest node 10 (dubnium)
-    nvm install lts/dubnium ; \
-    nvm use lts/dubnium ; \
+    # --> install latest node 12 (erbium)
+    nvm install lts/erbium ; \
+    nvm use lts/erbium ; \
     # --> install yarn
     npm install -g yarn ; \
-    wget https://github.com/container-job-runner/stack-config-files/releases/download/0.1.4-alpha/package.json ; \
-    wget https://github.com/container-job-runner/stack-config-files/releases/download/0.1.4-alpha/yarn.lock ; \
+    wget https://github.com/container-job-runner/stack-config-files/releases/download/0.1.7-alpha/package.json ; \
+    wget https://github.com/container-job-runner/stack-config-files/releases/download/0.1.7-alpha/yarn.lock ; \
     yarn --cache-folder ./ycache ; \
     rm -rf ./ycache ; \
+    NODE_OPTIONS="--max_old_space_size=4096" ; \
     yarn theia build ; \
     yarn theia download:plugins ; \
     fi

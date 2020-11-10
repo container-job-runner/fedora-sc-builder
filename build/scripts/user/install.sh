@@ -69,11 +69,11 @@ fi
 # -----> Theia
 if [ "$DEV_THEIA" = "TRUE" ] ; then
   # --> install nvm
-  curl --silent -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh | bash
+  curl --silent -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.37.0/install.sh | bash
   source ~/.bash_profile
-  # --> install latest node 10 (dubnium)
-  nvm install lts/dubnium
-  nvm use lts/dubnium
+  # --> install latest node 12 (erbium)
+  nvm install lts/erbium 
+  nvm use lts/erbium 
   # --> install yarn
   npm install -g yarn
 fi
