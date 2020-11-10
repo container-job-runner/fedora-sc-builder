@@ -6,6 +6,7 @@ build:
     LANG_PYTHON3: "TRUE"
     LANG_JULIA: "TRUE"
     LANG_LATEX: "TRUE"
+    LANG_OCTAVE: "TRUE"
     LANG_R: "TRUE"
     # ---- libraries -----------------------------------------------------------
     LIB_MATPLOTLIB : "TRUE"
