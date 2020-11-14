@@ -51,6 +51,7 @@ ARG DEV_CLI
 # ----> ARGS: additional software
 ARG ASW_SPACK
 ARG ASW_VNC
+ARG ASW_SLURM
 # ----> ARGS: additional options
 ARG THEIA_INSTALL_DIR
 

@@ -27,11 +27,12 @@
 #     DEV_JUPYTER     TRUE => Jupyter Notebook And Jupyter Lab with support for
 #                             all select languages.
 #     DEV_THEIA       TRUE -> Theia IDE with support for selected languages.
-#     DEV_CLI         TRUE => CLI development tools: git, tmux, vim, emac
+#     DEV_CLI         TRUE => CLI development tools: git, tmux, vim, emacs
 #
 # ---- Software ----------------------------------------------------------------
 #     ASW_SPACK       TRUE => Spack
 #     ASW_VNC         TRUE => Tiger VNC
+#     ASW_SLURM       TRUE => Slurm
 #
 # NOTE: To add extra dependancies for any language, library, or development
 # environment that can be installed with dnf simply add an entry to the arrays
@@ -75,6 +76,7 @@ pkg_dev_cli=('git' 'vim' 'emacs' 'tmux')
 # -- 1.3 DNF Packages: package managers   --------------------------------------
 pkg_asw_spack=('python3' 'gcc' 'make' 'git' 'curl' 'gnupg2')
 pkg_asw_vnc=('tigervnc-server' '@xfce-desktop-environment')
+pkg_asw_slurm=('slurm' 'slurm-slurmctld' 'slurm-slurmd' 'munge' 'munge-devel')
 
 # -- Add packages to dnfPkg array ----------------------------------------------
 declare -a pkgs=();
@@ -139,6 +141,9 @@ if [ "$ASW_SPACK" = "TRUE" ] ; then
 
 if [ "$ASW_VNC" = "TRUE" ] ; then
   pkgs=("${pkgs[@]}" "${pkg_asw_vnc[@]}") ; fi
+
+if [ "$ASW_SLURM" = "TRUE" ] ; then
+  pkgs=("${pkgs[@]}" "${pkg_asw_slurm[@]}") ; fi
 
 # -- remove redundant elements then install (requires bash 4+) -----------------
 declare -A pkgsUniq
@@ -229,4 +234,14 @@ fi
 # -----> Theia
 if [ "$DEV_THEIA" = "TRUE" ] && [ "$LANG_PYTHON3" = "TRUE" ] ; then
     pip3 install pylint
+fi
+
+# -----> Slurm
+if [ "$ASW_SLURM" = "TRUE" ] ; then
+    groupadd slurm
+    useradd -g slurm slurm
+    mkdir -p /var/log/slurm /var/spool/slurm /run/slurm
+    chown -R slurm: /var/log/slurm
+    chown -R slurm: /var/spool/slurm
+    chown -R slurm: /run/slurm
 fi
