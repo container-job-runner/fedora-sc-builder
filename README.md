@@ -16,6 +16,7 @@ This stack creates a non-root user with matching user id and group id as the hos
    - Latex
 2. **Libraries**
    - Matplotlib
+   - Ray
    - BLAS, LAPACK
    - OPENMPI
    - X11
@@ -25,6 +26,8 @@ This stack creates a non-root user with matching user id and group id as the hos
    - vim, git, vim, emacs, tmux
 4. **Package Managers**
    - spack
+   - tigervnc
+   - slurm
 
 The configurations for Jupyter and Theia are respectively stored the directories config/jupyter and config/theia which are bound to ~/.jupyter and ~/.theia in the container.
 
