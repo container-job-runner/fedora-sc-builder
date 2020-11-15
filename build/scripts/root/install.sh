@@ -32,6 +32,7 @@
 # ---- Software ----------------------------------------------------------------
 #     ASW_SPACK       TRUE => Spack
 #     ASW_VNC         TRUE => Tiger VNC
+#     ASW_SSHD        TRUE => SSHD
 #     ASW_SLURM       TRUE => Slurm
 #
 # NOTE: To add extra dependancies for any language, library, or development
@@ -76,6 +77,7 @@ pkg_dev_cli=('git' 'vim' 'emacs' 'tmux')
 # -- 1.3 DNF Packages: package managers   --------------------------------------
 pkg_asw_spack=('python3' 'gcc' 'make' 'git' 'curl' 'gnupg2')
 pkg_asw_vnc=('tigervnc-server' '@xfce-desktop-environment')
+pkg_asw_sshd=('openssh-server')
 pkg_asw_slurm=('slurm' 'slurm-slurmctld' 'slurm-slurmd' 'munge' 'munge-devel')
 
 # -- Add packages to dnfPkg array ----------------------------------------------
@@ -141,6 +143,9 @@ if [ "$ASW_SPACK" = "TRUE" ] ; then
 
 if [ "$ASW_VNC" = "TRUE" ] ; then
   pkgs=("${pkgs[@]}" "${pkg_asw_vnc[@]}") ; fi
+
+if [ "$ASW_SSHD" = "TRUE" ] ; then
+  pkgs=("${pkgs[@]}" "${pkg_asw_sshd[@]}") ; fi
 
 if [ "$ASW_SLURM" = "TRUE" ] ; then
   pkgs=("${pkgs[@]}" "${pkg_asw_slurm[@]}") ; fi
