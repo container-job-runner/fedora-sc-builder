@@ -83,3 +83,14 @@ if [ "$DEV_THEIA" = "TRUE" ] ; then
   # --> install yarn
   npm install -g yarn
 fi
+
+# -- VNC -----------------------------------------------------------------------
+if [ "$ASW_VNC" = "TRUE" ] ; then
+    # ---> copy vnc config files
+    mkdir -p ~/.vnc    
+    mv ~/.build/config/vnc/{config,xstartup} ~/.vnc/
+    chmod u+x ~/.vnc/xstartup
+    # ----> set vnc password
+    echo -e "$ASW_VNC_PASSWORD" | vncpasswd -f > ~/.vnc/passwd
+    chmod 0600 ~/.vnc/passwd
+fi
