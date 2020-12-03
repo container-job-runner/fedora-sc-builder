@@ -22,3 +22,4 @@ build:
     ASW_SPACK: "TRUE"
     ASW_VNC: "TRUE"
     ASW_SLURM: "TRUE"
+    ASW_SSHD: "TRUE"
