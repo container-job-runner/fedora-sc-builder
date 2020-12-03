@@ -28,6 +28,7 @@ This stack creates a non-root user with matching user id and group id as the hos
    - spack
    - tigervnc
    - slurm
+   - sshd
 
 The configurations for Jupyter and Theia are respectively stored the directories config/jupyter and config/theia which are bound to ~/.jupyter and ~/.theia in the container.
 
