@@ -24,7 +24,7 @@ This stack creates a non-root user with matching user id and group id as the hos
    - Jupyter notebook, Jupyter lab
    - Theia
    - vim, git, vim, emacs, tmux
-4. **Package Managers**
+4. **Additional Software**
    - spack
    - tigervnc
    - slurm
@@ -65,6 +65,9 @@ LIB_X11: "FALSE"
 DEV_JUPYTER: "TRUE"
 DEV_THEIA: "FALSE"
 DEV_CLI: "FALSE"
+# ---- additional software -------------------------------------------------
+ASW_SPACK: "FALSE"
+ASW_VNC: "FALSE"
 ```
 the stack will contain basic language dependencies for c, c++, python, the matplotlib library and Jupyter. Note that after changing the params you will need to rebuild the stack (e.g. `cjr stack:build stack-fedora-basic`)
 
@@ -79,8 +82,9 @@ To modify the main package install process, modify the files
 **Profiles**: This stack contains the following profiles:
 
 - all : installs everything.
-- dynamic: enables dynamic uid and gid on container startup to match host user.
+- reference: used to build official cjr fedora-sc image
 - *LANGUAGE-IDE* where LANGUAGE can be either 'fortran', 'python', or 'julia' and IDE can be 'jupyter' or 'theia'.
+- *LANGUAGE* where LANGUAGE can be either 'c', 'fortran', 'python', 'julia', or 'octave'
 
 **Theia Plugins**:
 Additional plugins can be installed by adding .vsix extension files to the directory config/theia/plugins. Note that Theia does not yet support all vs code extensions correctly, especially the latest versions. Several recommended extensions and their versions are:
