@@ -27,6 +27,8 @@ build:
     # ---- additional software -------------------------------------------------
     ASW_SPACK: "FALSE"
     ASW_VNC: "FALSE"
+    # ---- additional options --------------------------------------------------
+    SHARED_STORAGE_DIR: "/opt/shared" # used to store ~/.julia, ~/.nvm, ~/.npm
 environment:
   USE_LOCAL_GIT: "true" # used by theia (https://github.com/eclipse-theia/theia/issues/1964)
 mounts:
