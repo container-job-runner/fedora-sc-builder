@@ -33,6 +33,11 @@
 # Certain Julia Packages do not install as root. Install them here instead
 # -- Julia Packages ------------------------------------------------------------
 if [ "$LANG_JULIA" = "TRUE" ] ; then
+    if [ -n "$SHARED_STORAGE_DIR" ] ; then
+        export JULIA_DEPOT_PATH="$SHARED_STORAGE_DIR/julia-depot"
+        mkdir -p "$JULIA_DEPOT_PATH"
+        echo "export JULIA_DEPOT_PATH='$JULIA_DEPOT_PATH'" >> ~/.bashrc
+    fi    
     # ----> plotters
     if [ "$LIB_MATPLOTLIB" = "TRUE" ] ; then
         julia -e 'import Pkg; Pkg.add("PyPlot"); using PyPlot'
@@ -49,6 +54,11 @@ if [ "$LANG_JULIA" = "TRUE" ] ; then
         source /etc/profile.d/modules.sh
         module load mpi/openmpi-x86_64
         julia -e 'ENV["JULIA_MPI_BINARY"]="system"; import Pkg; Pkg.add("MPI"); using MPI'
+    fi
+    # ----> fix permissions for non-local folders (see: https://github.com/JuliaLang/julia/issues/12876)
+    if [ -n "$SHARED_STORAGE_DIR" ] ; then
+        chown -R :shared "$JULIA_DEPOT_PATH"  
+        chmod -R 774 "$JULIA_DEPOT_PATH"  
     fi
 fi
 

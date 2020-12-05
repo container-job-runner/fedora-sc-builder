@@ -40,3 +40,12 @@ if [[ "$GRANT_SUDO" = "PASSWORDLESS" ||  ( "$GRANT_SUDO" = "TRUE" && -z "$USER_P
 elif [ "$GRANT_SUDO" = "TRUE" ] ; then
     usermod -aG wheel $USER_NAME
 fi
+
+# -- add user to shared group ---------------------------------------------------
+groupadd shared
+usermod -aG shared $USER_NAME
+if [ -n "$SHARED_STORAGE_DIR" ] ; then
+    mkdir -p "$SHARED_STORAGE_DIR"
+    chown :shared "$SHARED_STORAGE_DIR"
+    chmod 774 "$SHARED_STORAGE_DIR"
+fi
