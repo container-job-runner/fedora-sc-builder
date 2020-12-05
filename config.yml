@@ -41,6 +41,9 @@ mounts:
   - type: "bind"
     hostPath: "config/vnc"
     containerPath: "/home/user/.vnc"
+  - type: "bind"
+    hostPath: "config/vscode"
+    containerPath: "/home/user/.vscode"
 files:
   containerRoot: "/home/user"
 flags:
