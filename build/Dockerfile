@@ -44,10 +44,11 @@ ARG LIB_LINALG
 ARG LIB_OPENMPI
 ARG LIB_X11
 ARG LIB_RAY
-# ----> ARGS: dev environemnts
+# ----> ARGS: dev environments
 ARG DEV_JUPYTER
 ARG DEV_THEIA
 ARG DEV_CLI
+ARG DEV_VSCODE
 # ----> ARGS: additional software
 ARG ASW_SPACK
 ARG ASW_VNC

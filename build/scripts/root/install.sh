@@ -26,7 +26,8 @@
 # ---- Dev Environemnts --------------------------------------------------------
 #     DEV_JUPYTER     TRUE => Jupyter Notebook And Jupyter Lab with support for
 #                             all select languages.
-#     DEV_THEIA       TRUE -> Theia IDE with support for selected languages.
+#     DEV_THEIA       TRUE => Theia IDE with support for selected languages.
+#     DEV_VSCODE      TRUE => Visual Studio Code
 #     DEV_CLI         TRUE => CLI development tools: git, tmux, vim, emacs
 #
 # ---- Software ----------------------------------------------------------------
@@ -73,6 +74,7 @@ pkg_lib_ray=('python3' 'python3-pip' 'python3-devel' 'gcc')
 pkg_dev_jupyter=('nodejs' 'python3-pip' 'python3-notebook' 'mathjax' 'sscg' 'git')
 pkg_dev_theia=()
 pkg_dev_cli=('git' 'vim' 'emacs' 'tmux')
+pkg_dev_vscode=('code')
 
 # -- 1.3 DNF Packages: package managers   --------------------------------------
 pkg_asw_spack=('python3' 'gcc' 'make' 'git' 'curl' 'gnupg2')
@@ -135,6 +137,11 @@ if [ "$DEV_THEIA" = "TRUE" ] ; then
 
 if [ "$DEV_CLI" = "TRUE" ] ; then
   pkgs=("${pkgs[@]}" "${pkg_dev_cli[@]}") ; fi
+
+if [ "$DEV_VSCODE" = "TRUE" ] ; then # instructions from https://code.visualstudio.com/docs/setup/linux
+  rpm --import https://packages.microsoft.com/keys/microsoft.asc
+  sh -c 'echo -e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.microsoft.com/yumrepos/vscode\nenabled=1\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" > /etc/yum.repos.d/vscode.repo'
+  pkgs=("${pkgs[@]}" "${pkg_dev_vscode[@]}") ; fi
 
 # ----> additional software
 
