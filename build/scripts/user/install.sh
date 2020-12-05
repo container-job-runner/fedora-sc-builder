@@ -84,14 +84,27 @@ fi
 
 # -----> Theia
 if [ "$DEV_THEIA" = "TRUE" ] ; then
-  # --> install nvm
-  curl --silent -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.37.0/install.sh | bash
-  source ~/.bash_profile
-  # --> install latest node 12 (erbium)
-  nvm install lts/erbium 
-  nvm use lts/erbium 
-  # --> install yarn
-  npm install -g yarn
+    if [ -n "$SHARED_STORAGE_DIR" ] ; then
+        export NVM_DIR="$SHARED_STORAGE_DIR/nvm" # change default nvm install directory
+        mkdir -p "$NVM_DIR"
+    fi
+    # --> install nvm
+    curl --silent -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.37.0/install.sh | bash
+    source ~/.bash_profile
+    # --> install latest node 12 (erbium)
+    nvm install lts/erbium 
+    nvm use lts/erbium 
+    # --> install yarn
+    if [ -n "$SHARED_STORAGE_DIR" ] ; then
+        NPM_DIR="$SHARED_STORAGE_DIR/npm"
+        mkdir -p "$NPM_DIR"
+        npm config set cache "$NPM_DIR"
+    fi
+    npm install -g yarn
+    # ----> fix permissions for non-local folders6)
+    if [ -n "$SHARED_STORAGE_DIR" ] ; then
+        chmod -R 774 "$NVM_DIR" "$NPM_DIR"
+    fi
 fi
 
 # -- VNC -----------------------------------------------------------------------
