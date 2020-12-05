@@ -76,13 +76,17 @@ fi
 
 # -- Spack ---------------------------------------------------------------------
 if [ "$ASW_SPACK" = "TRUE" ] ; then
-  mkdir -p ~/.local
-  mkdir -p ~/.local/bin
-  git clone https://github.com/spack/spack.git ~/.local/spack
-  ln -s ~/.local/spack/bin/spack ~/.local/bin/spack
+    if [ -n "$SHARED_STORAGE_DIR" ] ; then
+        SPACK_INSTALL_DIR="$SHARED_STORAGE_DIR/spack" # change default nvm install directory
+    else
+        SPACK_INSTALL_DIR=~/.local/spack
+    fi
+    git clone https://github.com/spack/spack.git "$SPACK_INSTALL_DIR"
+    mkdir -p ~/.local/bin
+    ln -s "$SPACK_INSTALL_DIR/bin/spack" ~/.local/bin/spack
 fi
 
-# -----> Theia
+# -- Theia ---------------------------------------------------------------------
 if [ "$DEV_THEIA" = "TRUE" ] ; then
     if [ -n "$SHARED_STORAGE_DIR" ] ; then
         export NVM_DIR="$SHARED_STORAGE_DIR/nvm" # change default nvm install directory
