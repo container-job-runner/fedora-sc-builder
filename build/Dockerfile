@@ -62,12 +62,8 @@ RUN mkdir -p /opt/build-scripts
 WORKDIR /opt/build-scripts
 COPY scripts/root/ ./
 RUN chmod +x *
-# -- install root dependencies -------------------------------------------------
-RUN ./install.sh
-COPY --from=theia_builder /root/theia $THEIA_INSTALL_DIR
-COPY --from=theia_builder /root/theia_launcher /usr/local/bin/theia
 
-# ----> ARGS: user (placed here to prevent full rebuild)
+# == User Creation ==============================================================
 ARG USER_NAME=user
 ARG USER_PASSWORD=password
 ARG GRANT_SUDO=false
@@ -76,6 +72,13 @@ ARG GROUP_ID
 
 # -- Generate restricted user account ------------------------------------------
 RUN /opt/build-scripts/add-user.sh
+
+# == Software Installation (Root) ===============================================
+RUN ./install.sh
+COPY --from=theia_builder /root/theia $THEIA_INSTALL_DIR
+COPY --from=theia_builder /root/theia_launcher /usr/local/bin/theia
+
+# == Software Installation (User) ===============================================
 
 # -- copy user config files to ~/.build-config
 RUN mkdir -p "/home/$USER_NAME/.build/config"
