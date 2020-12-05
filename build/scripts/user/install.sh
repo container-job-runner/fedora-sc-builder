@@ -93,4 +93,7 @@ if [ "$ASW_VNC" = "TRUE" ] ; then
     # ----> set vnc password
     echo -e "$ASW_VNC_PASSWORD" | vncpasswd -f > ~/.vnc/passwd
     chmod 0600 ~/.vnc/passwd
+    # --> set desktop defaults
+    mkdir -p ~/.config
+    cp ~/.build/config/vnc/mimeapps.list ~/.config/mimeapps.list
 fi
