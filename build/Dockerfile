@@ -16,8 +16,8 @@ RUN if [ "$DEV_THEIA" = "TRUE" ] ; then \
     nvm use lts/erbium ; \
     # --> install yarn
     npm install -g yarn ; \
-    wget https://github.com/container-job-runner/stack-config-files/releases/download/0.1.4-alpha/package.json ; \
-    wget https://github.com/container-job-runner/stack-config-files/releases/download/0.1.4-alpha/yarn.lock ; \
+    wget https://github.com/container-job-runner/stack-config-files/releases/download/0.1.8-alpha/package.json ; \
+    wget https://github.com/container-job-runner/stack-config-files/releases/download/0.1.8-alpha/yarn.lock ; \
     yarn --cache-folder ./ycache ; \
     rm -rf ./ycache ; \
     NODE_OPTIONS="--max_old_space_size=4096" ; \
