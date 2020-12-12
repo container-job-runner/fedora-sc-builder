@@ -187,7 +187,7 @@ if [ "$DEV_JUPYTER" = "TRUE" ] ; then
     # --> Latex for JupyterLab (https://github.com/jupyterlab/jupyterlab-latex)
     pip3 install jupyterlab_latex
     jupyter labextension install @jupyterlab/latex
- fi
+  fi
   if [ "$LANG_C" = "TRUE" ] ; then
     # --> C Kernel for Jypyter https://github.com/brendan-rius/jupyter-c-kernel
     pip3 install jupyter-c-kernel
@@ -196,6 +196,10 @@ if [ "$DEV_JUPYTER" = "TRUE" ] ; then
   if [ "$LANG_R" = "TRUE" ] ; then
     # --> R Kernel for Jupyter (https://irkernel.github.io/installation/)
     R -e 'r = getOption("repos"); r["CRAN"] = "https://cloud.r-project.org/"; install.packages(c("repr", "IRdisplay", "IRkernel"), repos = r, type = "source");'
+  fi
+  if [ "$DEV_CLI" = "TRUE" ] ; then
+    pip3 install --upgrade jupyterlab jupyterlab-git
+    jupyter lab build
   fi
   # if [ "$LANG_FORTRAN" = "TRUE" ] ; then
   #   # possible options to add later:
