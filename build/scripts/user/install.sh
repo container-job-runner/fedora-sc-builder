@@ -37,7 +37,7 @@ if [ "$LANG_JULIA" = "TRUE" ] ; then
         export JULIA_DEPOT_PATH="$SHARED_STORAGE_DIR/julia-depot"
         mkdir -p "$JULIA_DEPOT_PATH"
         echo "export JULIA_DEPOT_PATH='$JULIA_DEPOT_PATH'" >> ~/.bashrc
-    fi    
+    fi
     # ----> plotters
     if [ "$LIB_MATPLOTLIB" = "TRUE" ] ; then
         julia -e 'import Pkg; Pkg.add("PyPlot"); using PyPlot'
@@ -57,8 +57,8 @@ if [ "$LANG_JULIA" = "TRUE" ] ; then
     fi
     # ----> fix permissions for non-local folders (see: https://github.com/JuliaLang/julia/issues/12876)
     if [ -n "$SHARED_STORAGE_DIR" ] ; then
-        chown -R :shared "$JULIA_DEPOT_PATH"  
-        chmod -R 774 "$JULIA_DEPOT_PATH"  
+        chown -R :shared "$JULIA_DEPOT_PATH"
+        chmod -R 774 "$JULIA_DEPOT_PATH"
     fi
 fi
 
@@ -96,8 +96,8 @@ if [ "$DEV_THEIA" = "TRUE" ] ; then
     curl --silent -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.37.0/install.sh | bash
     source ~/.bash_profile
     # --> install latest node 12 (erbium)
-    nvm install lts/erbium 
-    nvm use lts/erbium 
+    nvm install lts/erbium
+    nvm use lts/erbium
     # --> install yarn
     if [ -n "$SHARED_STORAGE_DIR" ] ; then
         NPM_DIR="$SHARED_STORAGE_DIR/npm"
@@ -105,8 +105,9 @@ if [ "$DEV_THEIA" = "TRUE" ] ; then
         npm config set cache "$NPM_DIR"
     fi
     npm install -g yarn
-    # ----> fix permissions for non-local folders6)
+    # ----> fix permissions for non-local folders)
     if [ -n "$SHARED_STORAGE_DIR" ] ; then
+        chown -R :shared "$NVM_DIR" "$NPM_DIR"
         chmod -R 774 "$NVM_DIR" "$NPM_DIR"
     fi
 fi
@@ -114,7 +115,7 @@ fi
 # -- VNC -----------------------------------------------------------------------
 if [ "$ASW_VNC" = "TRUE" ] ; then
     # ---> copy vnc config files
-    mkdir -p ~/.vnc    
+    mkdir -p ~/.vnc
     mv ~/.build/config/vnc/{config,xstartup} ~/.vnc/
     chmod u+x ~/.vnc/xstartup
     # ----> set vnc password
