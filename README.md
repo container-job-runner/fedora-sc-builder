@@ -18,7 +18,7 @@ This stack creates a non-root user with matching user id and group id as the hos
    - Matplotlib
    - Ray
    - BLAS, LAPACK
-   - OPENMPI
+   - OPENMPI, mpi4py
    - X11
 3. **Dev Environments**
    - Jupyter notebook, Jupyter lab
