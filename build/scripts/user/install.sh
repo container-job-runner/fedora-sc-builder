@@ -82,6 +82,10 @@ if [ "$ASW_SPACK" = "TRUE" ] ; then
         SPACK_INSTALL_DIR=~/.local/spack
     fi
     git clone https://github.com/spack/spack.git "$SPACK_INSTALL_DIR"
+    if [ -n "$SHARED_STORAGE_DIR" ] ; then
+        chown -R :shared "$SPACK_INSTALL_DIR"
+        chmod -R 774 "$SPACK_INSTALL_DIR"
+    fi
     mkdir -p ~/.local/bin
     ln -s "$SPACK_INSTALL_DIR/bin/spack" ~/.local/bin/spack
 fi
