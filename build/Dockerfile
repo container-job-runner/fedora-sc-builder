@@ -30,6 +30,22 @@ RUN echo -e '#!/bin/bash\nyarn --cwd '$THEIA_INSTALL_DIR' start $@' > /root/thei
 # == 2. main Dockerfile: Fedora ================================================
 FROM fedora:32
 
+# -- Directory for storing build scripts ---------------------------------------
+RUN mkdir -p /opt/build-scripts
+
+# == User Creation ==============================================================
+ARG USER_NAME=user
+ARG USER_PASSWORD=password
+ARG GRANT_SUDO=false
+ARG USER_ID
+ARG GROUP_ID
+
+# -- Generate restricted user account ------------------------------------------
+COPY scripts/root/add-user.sh /opt/build-scripts/
+RUN chmod +x /opt/build-scripts/add-user.sh && /opt/build-scripts/add-user.sh
+
+# == Software Installation =====================================================
+
 # ----> ARGS: languages
 ARG LANG_C
 ARG LANG_FORTRAN
@@ -59,33 +75,19 @@ ARG THEIA_INSTALL_DIR
 ARG ASW_VNC_PASSWORD=password
 ARG SHARED_STORAGE_DIR=/opt/shared
 
-# -- Directory for storing scripts ----------------------------------------------
-RUN mkdir -p /opt/build-scripts
-
-# == User Creation ==============================================================
-ARG USER_NAME=user
-ARG USER_PASSWORD=password
-ARG GRANT_SUDO=false
-ARG USER_ID
-ARG GROUP_ID
-
-# -- Generate restricted user account ------------------------------------------
-COPY scripts/root/add-user.sh /opt/build-scripts/
-RUN chmod +x /opt/build-scripts/add-user.sh && /opt/build-scripts/add-user.sh
-
-# == Software Installation (Root) ===============================================
+# -- install root dependencies -------------------------------------------------
 COPY scripts/root/install.sh /opt/build-scripts/install.sh
 RUN chmod +x /opt/build-scripts/install.sh && /opt/build-scripts/install.sh
 COPY --from=theia_builder /root/theia $THEIA_INSTALL_DIR
 COPY --from=theia_builder /root/theia_launcher /usr/local/bin/theia
 
-# == Software Installation (User) ===============================================
+# -- install user dependencies -------------------------------------------------
 ARG USER_BUILD_DIR="/home/$USER_NAME/.build"
 RUN mkdir -p "$USER_BUILD_DIR/scripts" "$USER_BUILD_DIR/config"
+# ----> Copy config scripts
 COPY config/user/ "$USER_BUILD_DIR/config/"
 RUN chown -R $USER_ID:$GROUP_ID "$USER_BUILD_DIR"
-
-# -- install user dependencies -------------------------------------------------
+# ----> run install scripts
 COPY scripts/user/install.sh "$USER_BUILD_DIR/scripts/"
 RUN chown $USER_ID:$GROUP_ID "$USER_BUILD_DIR/scripts/install.sh"
 USER $USER_NAME
