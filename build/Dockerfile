@@ -59,11 +59,8 @@ ARG THEIA_INSTALL_DIR
 ARG ASW_VNC_PASSWORD=password
 ARG SHARED_STORAGE_DIR=/opt/shared
 
-# -- copy root install files to /opt/build-scripts -----------------------------
+# -- Directory for storing scripts ----------------------------------------------
 RUN mkdir -p /opt/build-scripts
-WORKDIR /opt/build-scripts
-COPY scripts/root/ ./
-RUN chmod +x *
 
 # == User Creation ==============================================================
 ARG USER_NAME=user
@@ -73,37 +70,37 @@ ARG USER_ID
 ARG GROUP_ID
 
 # -- Generate restricted user account ------------------------------------------
-RUN /opt/build-scripts/add-user.sh
+COPY scripts/root/add-user.sh /opt/build-scripts/
+RUN chmod +x /opt/build-scripts/add-user.sh && /opt/build-scripts/add-user.sh
 
 # == Software Installation (Root) ===============================================
-RUN ./install.sh
+COPY scripts/root/install.sh /opt/build-scripts/install.sh
+RUN chmod +x /opt/build-scripts/install.sh && /opt/build-scripts/install.sh
 COPY --from=theia_builder /root/theia $THEIA_INSTALL_DIR
 COPY --from=theia_builder /root/theia_launcher /usr/local/bin/theia
 
 # == Software Installation (User) ===============================================
+ARG USER_BUILD_DIR="/home/$USER_NAME/.build"
+RUN mkdir -p "$USER_BUILD_DIR/scripts" "$USER_BUILD_DIR/config"
+COPY config/user/ "$USER_BUILD_DIR/config/"
+RUN chown -R $USER_ID:$GROUP_ID "$USER_BUILD_DIR"
 
-# -- copy user config files to ~/.build-config
-RUN mkdir -p "/home/$USER_NAME/.build/config"
-WORKDIR "/home/$USER_NAME/.build/config"
-COPY config/user/ ./
-# -- copy user install scripts to ~/.build-scripts -----------------------------
-RUN mkdir -p "/home/$USER_NAME/.build/scripts"
-WORKDIR "/home/$USER_NAME/.build/scripts"
-COPY scripts/user/ ./
-RUN chown -R $USER_ID:$GROUP_ID "/home/$USER_NAME/.build"
-
-USER $USER_NAME
-RUN chmod +x *
 # -- install user dependencies -------------------------------------------------
-RUN ./install.sh
+COPY scripts/user/install.sh "$USER_BUILD_DIR/scripts/"
+RUN chown $USER_ID:$GROUP_ID "$USER_BUILD_DIR/scripts/install.sh"
+USER $USER_NAME
+RUN chmod u+x "$USER_BUILD_DIR/scripts/install.sh" && "$USER_BUILD_DIR/scripts/install.sh"
 
 # -- install extra root dependencies (placed here to prevent full rebuild) -----
 USER root
-RUN /opt/build-scripts/install-extra.sh
+COPY scripts/root/install-extra.sh /opt/build-scripts/
+RUN chmod +x /opt/build-scripts/install-extra.sh && /opt/build-scripts/install-extra.sh
 
 # -- install extra user dependencies (placed here to prevent full rebuild) -----
+COPY scripts/user/install-extra.sh "$USER_BUILD_DIR/scripts/"
+RUN chown $USER_ID:$GROUP_ID "$USER_BUILD_DIR/scripts/install-extra.sh"
 USER $USER_NAME
-RUN /home/$USER_NAME/.build/scripts/install-extra.sh
+RUN chmod +x "$USER_BUILD_DIR/scripts/install-extra.sh" && "$USER_BUILD_DIR/scripts/install-extra.sh"
 
 # -- remove user build directory
 RUN rm -r /home/$USER_NAME/.build
