@@ -97,7 +97,7 @@ if [ "$DEV_THEIA" = "TRUE" ] ; then
         mkdir -p "$NVM_DIR"
     fi
     # --> install nvm
-    curl --silent -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.37.0/install.sh | bash
+    curl --silent -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
     source ~/.bash_profile
     # --> install latest node 12 (erbium)
     nvm install lts/erbium
