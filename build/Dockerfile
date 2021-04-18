@@ -39,6 +39,7 @@ ARG USER_PASSWORD=password
 ARG GRANT_SUDO=false
 ARG USER_ID
 ARG GROUP_ID
+ARG SHARED_STORAGE_DIR=/opt/shared
 
 # -- Generate restricted user account ------------------------------------------
 COPY scripts/root/add-user.sh /opt/build-scripts/
@@ -73,7 +74,6 @@ ARG ASW_SLURM
 # ----> ARGS: additional options
 ARG THEIA_INSTALL_DIR
 ARG ASW_VNC_PASSWORD=password
-ARG SHARED_STORAGE_DIR=/opt/shared
 
 # -- install root dependencies -------------------------------------------------
 COPY scripts/root/install.sh /opt/build-scripts/install.sh
