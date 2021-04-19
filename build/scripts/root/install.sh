@@ -97,8 +97,6 @@ if [ "$LANG_PYTHON3" = "TRUE" ] ; then
   pkgs=("${pkgs[@]}" "${pkg_lang_python3[@]}") ; fi
 
 if [ "$LANG_JULIA" = "TRUE" ] ; then
-  eval "$pkg_manager install -y dnf-plugins-core"
-  eval "$pkg_manager copr enable -y nalimilan/julia"
   pkgs=("${pkgs[@]}" "${pkg_lang_julia[@]}") ; fi
 
 if [ "$LANG_R" = "TRUE" ] ; then
