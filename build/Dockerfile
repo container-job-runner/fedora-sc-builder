@@ -2,7 +2,7 @@ ARG DEV_THEIA
 ARG THEIA_INSTALL_DIR=/opt/theia
 
 # == 1. build stage: Theia =====================================================
-FROM fedora:32 as theia_builder
+FROM fedora:33 as theia_builder
 ARG DEV_THEIA
 ARG THEIA_INSTALL_DIR
 WORKDIR /root/theia
@@ -28,7 +28,7 @@ RUN echo -e '#!/bin/bash\nyarn --cwd '$THEIA_INSTALL_DIR' start $@' > /root/thei
     chmod a+x /root/theia_launcher ;
 
 # == 2. main Dockerfile: Fedora ================================================
-FROM fedora:32
+FROM fedora:33
 
 # -- Directory for storing build scripts ---------------------------------------
 RUN mkdir -p /opt/build-scripts
