@@ -14,6 +14,7 @@
 # ------------------------------------------------------------------------------
 
 dnf install -y shadow-utils passwd cracklib-dicts
+dnf clean all 
 
 # -- Add User-------------------------------------------------------------------
 if [ -z "$USER_ID" ] || [ -z "$GROUP_ID" ] ; then
