@@ -1,0 +1,60 @@
+#!/usr/bin/python3
+
+# ==============================================================================
+# vncconfig
+# A simple python script that alters an exising user vnc configuration
+# accepts flag -geometry, -rfbport, and -depth
+# ==============================================================================
+
+import argparse
+import regex # used instead of re to avoid "look-behind requires fixed-width pattern". Install with pip install regex
+from pathlib import Path
+
+# returns parser for command args
+def initParser(settings):
+    parser = argparse.ArgumentParser()
+    for setting in settings:
+        parser.add_argument(f"-{setting}")
+    return parser
+
+# returns full path to vnc config file
+def configPath():
+    home = str(Path.home()) 
+    return f"{home}/.vnc/config"
+
+# returns string with contents of config file or empty if config file does not exist
+def readConfig():
+    config = ""    
+    with open(configPath(), 'r') as file:
+        config = file.read()
+    return config
+
+# overrites existing config file
+def writeConfig(config):
+    with open(configPath(), 'w') as file:
+        file.write(config)
+        file.close()
+
+# alters existing setting, or appends new setting to configuration. Does not modify config if value is empty
+def setConfig(config, setting, value):
+    if value is None:
+        return config
+
+    pattern = rf"(?<=(?<!#\s+){setting}=)\S+"
+    match = regex.search(pattern, config) 
+    if match:
+        config = regex.sub(pattern, value, config)
+    else:
+        config = f"{config}\n{setting}={value}"
+    return config
+
+if __name__ == "__main__":
+    settings = ("rfbport", "geometry", "depth")
+    
+    parser = initParser(settings)
+    args = vars(parser.parse_args())
+    
+    config = readConfig()
+    for setting in settings:
+        config = setConfig(config, setting, args[setting])
+    writeConfig(config)

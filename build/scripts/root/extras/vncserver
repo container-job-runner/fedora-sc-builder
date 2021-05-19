@@ -1,0 +1,24 @@
+#!/bin/bash
+
+# ==============================================================================
+# This script acts as a replacement for the vncserver command in Fedora 34.
+# It currently allows the caller to set the parameters
+#   -geometry
+#   -rfbport
+#   -depth
+# It operates by running a python script that makes any appropriate changes to
+# the users' .vnc/config file, and then manually starts the vncserver.
+# -- Notes ---------------------------------------------------------------------
+# Fedora 34 removed vncserver in favor of a systemd service. The service file
+# can be found in /lib/systemd/system/vncserver@.service. To use the service one
+# first adds a line like
+#
+# :1=user
+#
+# to /etc/tigervnc/vncserver.users, and then starts the service or manually runs
+# /usr/libexec/vncsession-start as root. To avoid systemd in a  container, this 
+# script provides a minimal replacement to vncserver for cjr.
+# ==============================================================================
+
+pyvncconfig $@
+/usr/libexec/vncserver :1

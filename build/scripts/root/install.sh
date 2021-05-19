@@ -78,7 +78,7 @@ pkg_dev_vscode=('code')
 
 # -- 1.3 DNF Packages: package managers   --------------------------------------
 pkg_asw_spack=('python3' 'gcc' 'make' 'git' 'curl' 'gnupg2')
-pkg_asw_vnc=('tigervnc-server' '@xfce-desktop-environment')
+pkg_asw_vnc=('tigervnc-server' '@xfce-desktop-environment' 'python3' 'python3-pip')
 pkg_asw_sshd=('openssh-server')
 pkg_asw_slurm=('slurm' 'slurm-slurmctld' 'slurm-slurmd' 'munge' 'munge-devel')
 
@@ -260,5 +260,16 @@ if [ "$ASW_SLURM" = "TRUE" ] ; then
     chown -R slurm: /run/slurm
 fi
 
+# ----> VNC
+if [ "$ASW_VNC" = "TRUE" ] ; then
+    # overwrite legacy script /usr/bin/vncserver
+    cp /opt/build-scripts/extras/{vncserver,pyvncconfig} /usr/bin/
+    chmod a+x /usr/bin/{vncserver,pyvncconfig}
+    # install regex package required by configvnc.py
+    pip3 install regex
+    # remove power manager services (which cause problems in containers)
+    dnf remove -y xfce4-power-manager
+fi 
+
 # clear all dnf caches
-dnf clean all 
+dnf clean all
