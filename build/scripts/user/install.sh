@@ -128,4 +128,13 @@ if [ "$ASW_VNC" = "TRUE" ] ; then
     # --> set desktop defaults
     mkdir -p ~/.config
     cp ~/.build/config/vnc/mimeapps.list ~/.config/mimeapps.list
+    # --> disable xfce polkit, power management, screensaver / screen lock, dnfdragora updater
+    mkdir -p ~/.config/autostart
+    cp ~/.build/config/vnc/xfce/{xfce-polkit.desktop,xfce4-power-manager.desktop,xfce4-screensaver.desktop,org.mageia.dnfdragora-updater.desktop} ~/.config/autostart
+    # --> disable xfce terminal paste warning
+    mkdir -p ~/.config/xfce4/terminal/
+    cp ~/.build/config/vnc/xfce/terminalrc ~/.config/xfce4/terminal/
+    # --> disable screensaver and screen lock
+    mkdir -p ~/.config/xfce4/xfconf/xfce-perchannel-xml/
+    cp ~/.build/config/vnc/xfce/xfce4-screensaver.xml ~/.config/xfce4/xfconf/xfce-perchannel-xml/
 fi
