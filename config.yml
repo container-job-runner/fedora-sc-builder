@@ -50,3 +50,4 @@ flags:
   podman-userns: keep-id
   docker-chown-file-volume: host-user
   cmd-args: join
+  security-opt: "seccomp=unconfined" # added for xfce terminal (see https://github.com/mviereck/x11docker/issues/346).
