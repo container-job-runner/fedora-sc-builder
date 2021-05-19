@@ -78,7 +78,7 @@ pkg_dev_vscode=('code')
 
 # -- 1.3 DNF Packages: package managers   --------------------------------------
 pkg_asw_spack=('python3' 'gcc' 'make' 'git' 'curl' 'gnupg2')
-pkg_asw_vnc=('tigervnc-server' '@xfce-desktop-environment' 'python3' 'python3-pip')
+pkg_asw_vnc=('tigervnc-server' '@xfce-desktop-environment' 'python3' 'python3-pip' 'gedit' 'epiphany')
 pkg_asw_sshd=('openssh-server')
 pkg_asw_slurm=('slurm' 'slurm-slurmctld' 'slurm-slurmd' 'munge' 'munge-devel')
 
