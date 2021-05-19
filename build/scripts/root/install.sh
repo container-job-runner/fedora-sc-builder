@@ -2,8 +2,8 @@
 
 # -- ROOT INSTALL SCRIPT -------------------------------------------------------
 # Installs dependencies for Fedora using the dnf package manager and additional
-# manual installations. This script installs all the dependancies as root user.
-# It responds to the following environmental variables:
+# manual commands. This script runs as root user and responds to the following
+# environmental variables:
 #
 # ---- languages ---------------------------------------------------------------
 #     LANG_C          TRUE => C language packages installed
@@ -39,7 +39,7 @@
 # NOTE: To add extra dependancies for any language, library, or development
 # environment that can be installed with dnf simply add an entry to the arrays
 # in 1.1-1.3. More sophisticated dependancies can be placed in the script
-# root_install_extra.sh or written within this bash script.
+# install-extra.sh or written within this bash script.
 # ------------------------------------------------------------------------------
 
 pkg_manager="dnf"
@@ -82,7 +82,7 @@ pkg_asw_vnc=('tigervnc-server' '@xfce-desktop-environment' 'python3' 'python3-pi
 pkg_asw_sshd=('openssh-server')
 pkg_asw_slurm=('slurm' 'slurm-slurmctld' 'slurm-slurmd' 'munge' 'munge-devel')
 
-# -- Add packages to dnfPkg array ----------------------------------------------
+# -- Add packages to pkgs array ------------------------------------------------
 declare -a pkgs=();
 
 # ----> languages
@@ -170,7 +170,7 @@ fi
 # -----> Jupyter
 if [ "$DEV_JUPYTER" = "TRUE" ] ; then
   pip3 install jupyterlab # Jupyter Lab
-  # --> install atom dark theme -------------------------------------------------
+  # --> install atom dark theme ------------------------------------------------
   cd /opt
   git clone https://github.com/container-job-runner/jupyter-atom-theme.git
   jupyter labextension install jupyter-atom-theme
