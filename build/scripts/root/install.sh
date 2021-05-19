@@ -259,3 +259,6 @@ if [ "$ASW_SLURM" = "TRUE" ] ; then
     chown -R slurm: /var/spool/slurm
     chown -R slurm: /run/slurm
 fi
+
+# clear all dnf caches
+dnf clean all 
