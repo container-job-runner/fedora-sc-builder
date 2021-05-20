@@ -291,8 +291,6 @@ if [ "$ASW_VNC" = "TRUE" ] ; then
     pip3 install regex
     # remove power manager services (which cause problems in containers)
     dnf remove -y xfce4-power-manager
-    # set default browser to epiphany
-    xdg-settings set default-web-browser org.gnome.Epiphany.desktop
 fi 
 
 # clear all dnf caches

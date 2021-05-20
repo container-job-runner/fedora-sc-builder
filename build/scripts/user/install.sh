@@ -137,7 +137,7 @@ if [ "$ASW_VNC" = "TRUE" ] ; then
     # --> disable screensaver and screen lock
     mkdir -p ~/.config/xfce4/xfconf/xfce-perchannel-xml/
     cp ~/.build/config/vnc/xfce/xfce4-screensaver.xml ~/.config/xfce4/xfconf/xfce-perchannel-xml/
-    # --> set default xfce4 Web Browser to Ephipany
+    # set default browser to epiphany ( equivalent to running xdg-settings set default-web-browser org.gnome.Epiphany.desktop -- does not work when run with vnc )
     mkdir -p ~/.config/xfce4/
     cp ~/.build/config/vnc/xfce/helpers.rc ~/.config/xfce4/
 fi
