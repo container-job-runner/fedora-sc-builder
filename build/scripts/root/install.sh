@@ -42,6 +42,10 @@
 # install-extra.sh or written within this bash script.
 # ------------------------------------------------------------------------------
 
+# load helper functions
+SCRIPT_DIR="$(dirname "$(readlink -f "$0")")"
+source "$SCRIPT_DIR/helper-functions.sh"
+
 pkg_manager="dnf"
 
 # == STEP 1: Install DNF packages ==============================================
@@ -248,6 +252,24 @@ fi
 # -----> Theia
 if [ "$DEV_THEIA" = "TRUE" ] && [ "$LANG_PYTHON3" = "TRUE" ] ; then
     pip3 install pylint
+fi
+
+# -----> VS Code (VNC Patch: https://github.com/microsoft/vscode/issues/3451 )
+if [ "$DEV_VSCODE" = "TRUE" ] ; then  
+    # create modified libraries
+    mkdir -p /opt/vscode/lib64
+    cp /usr/lib64/libxcb.so.1 /opt/vscode/lib64
+    sed -i 's/BIG-REQUESTS/_IG-REQUESTS/' /opt/vscode/lib64/libxcb.so.1 
+    cp /usr/lib64/libxcb.so.1.1.0 /opt/vscode/lib64
+    sed -i 's/BIG-REQUESTS/_IG-REQUESTS/' /opt/vscode/lib64/libxcb.so.1.1.0 
+    # create launcher
+    echo 'bash -c "LD_PRELOAD=/opt/vscode/lib64/libxcb.so.1:/opt/vscode/lib64/libxcb.so.1.1.0 /usr/share/code/code $@"' > /opt/vscode/code
+    chmod a+x /opt/vscode/code
+    # update user bash
+    echo 'alias code="/opt/vscode/code"' >> /home/user/.bashrc
+    # update application launchers
+    replaceConfigFileParam "/usr/share/applications/code.desktop" "Exec" "/opt/vscode/code --no-sandbox --unity-launch %F"
+    replaceConfigFileParam "/usr/share/applications/code-url-handler.desktop" "Exec" "/opt/vscode/code --no-sandbox --unity-launch %F"
 fi
 
 # -----> Slurm
