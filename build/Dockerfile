@@ -76,7 +76,7 @@ ARG THEIA_INSTALL_DIR
 ARG ASW_VNC_PASSWORD=password
 
 # -- install root dependencies -------------------------------------------------
-COPY scripts/root/install.sh /opt/build-scripts/install.sh
+COPY scripts/root/install.sh scripts/root/helper-functions.sh /opt/build-scripts/
 COPY scripts/root/extras /opt/build-scripts/extras
 RUN chmod +x /opt/build-scripts/install.sh && /opt/build-scripts/install.sh
 COPY --from=theia_builder /root/theia $THEIA_INSTALL_DIR
