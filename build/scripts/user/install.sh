@@ -36,7 +36,7 @@ if [ "$LANG_JULIA" = "TRUE" ] ; then
     if [ -n "$SHARED_STORAGE_DIR" ] ; then
         export JULIA_DEPOT_PATH="$SHARED_STORAGE_DIR/julia-depot"
         mkdir -p "$JULIA_DEPOT_PATH"
-        echo "export JULIA_DEPOT_PATH='$JULIA_DEPOT_PATH'" >> ~/.bashrc
+        # REMARK: JULIA_DEPOT_PATH environment variable is currently set in config.yml. IMPORTANT! config.yml must be updated if path is changed
     fi
     # ----> plotters
     if [ "$LIB_MATPLOTLIB" = "TRUE" ] ; then

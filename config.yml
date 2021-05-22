@@ -31,6 +31,7 @@ build:
     SHARED_STORAGE_DIR: "/opt/shared" # used to store ~/.julia, ~/.nvm, ~/.npm
 environment:
   USE_LOCAL_GIT: "true" # used by theia (https://github.com/eclipse-theia/theia/issues/1964)
+  JULIA_DEPOT_PATH: "/opt/shared/julia-depot"
 mounts:
   - type: "bind"
     hostPath: "config/jupyter"
