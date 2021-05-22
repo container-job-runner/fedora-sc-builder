@@ -178,11 +178,9 @@ if [ "$DEV_JUPYTER" = "TRUE" ] ; then
   cd /opt
   git clone https://github.com/container-job-runner/jupyter-atom-theme.git
   jupyter labextension install jupyter-atom-theme
-  # --> matplotlib Widgets for JupiterLab (https://github.com/matplotlib/jupyter-matplotlib)
+  # --> matplotlib Widgets for JupiterLab (https://github.com/matplotlib/ipympl)
   if [ "$LIB_MATPLOTLIB" = "TRUE" ] ; then
     pip3 install ipympl
-    jupyter labextension install @jupyter-widgets/jupyterlab-manager
-    jupyter labextension install jupyter-matplotlib
     pip3 install PyQt5
   fi
   if [ "$LANG_LATEX" = "TRUE" ] ; then
