@@ -199,8 +199,8 @@ if [ "$DEV_JUPYTER" = "TRUE" ] ; then
     R -e 'r = getOption("repos"); r["CRAN"] = "https://cloud.r-project.org/"; install.packages(c("repr", "IRdisplay", "IRkernel"), repos = r, type = "source");'
   fi
   if [ "$DEV_CLI" = "TRUE" ] ; then
+    # --> Git extension for JupyterLab https://github.com/jupyterlab/jupyterlab-git
     pip3 install --upgrade jupyterlab jupyterlab-git
-    jupyter lab build
   fi
   # if [ "$LANG_FORTRAN" = "TRUE" ] ; then
   #   # possible options to add later:
