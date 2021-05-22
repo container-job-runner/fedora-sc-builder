@@ -70,7 +70,7 @@ fi
 # -- 1.2 DNF Packages: libraries  ----------------------------------------------
 pkg_lib_linAlg=('liblas-devel' 'lapack-devel' 'fftw-devel')
 pkg_lib_openMPI=('environment-modules' 'openmpi-devel')
-pkg_lib_matPlotLib=('python3-matplotlib' 'qt5-devel' 'libxkbfile' 'xorg-x11-fonts-misc' 'xorg-x11-xbitmaps')
+pkg_lib_matPlotLib=('python3-matplotlib')
 pkg_lib_x11=('xorg-x11-apps' 'xorg-x11-xauth' 'xorg-x11-fonts*' 'Xvfb')
 pkg_lib_ray=('python3' 'python3-pip' 'python3-devel' 'gcc')
 
