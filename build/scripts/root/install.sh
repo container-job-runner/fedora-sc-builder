@@ -187,8 +187,9 @@ if [ "$DEV_JUPYTER" = "TRUE" ] ; then
   fi
   if [ "$LANG_LATEX" = "TRUE" ] ; then
     # --> Latex for JupyterLab (https://github.com/jupyterlab/jupyterlab-latex)
-    pip3 install jupyterlab_latex
-    jupyter labextension install @jupyterlab/latex
+    #pip3 install jupyterlab_latex
+    #jupyter labextension install @jupyterlab/latex
+    echo "WARNING: JupyterLab Latex install is currently disabled." # Disabled until until Jupyter v3 is supported (https://github.com/jupyterlab/jupyterlab-latex/issues/154)
   fi
   if [ "$LANG_C" = "TRUE" ] ; then
     # --> C Kernel for Jypyter https://github.com/brendan-rius/jupyter-c-kernel
