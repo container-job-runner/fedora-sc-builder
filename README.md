@@ -16,7 +16,7 @@ This stack creates a non-root user with matching user id and group id as the hos
    - Latex
 2. **Libraries**
    - Matplotlib
-   - Ray
+   - Ray (*Temporarily Disabled*)
    - BLAS, LAPACK
    - OPENMPI, mpi4py
    - X11
@@ -90,7 +90,7 @@ To modify the main package install process, modify the files
 **Theia Plugins**:
 Additional plugins can be installed by adding .vsix extension files to the directory config/theia/plugins. Note that Theia does not yet support all vs code extensions correctly, especially the latest versions. Several recommended extensions and their versions are:
 
-- *Python*: [vscode-python](https://github.com/microsoft/vscode-python), version [2019.11.50794](https://github.com/microsoft/vscode-python/releases/tag/2019.11.50794).
+- *Python*: [vscode-python](https://github.com/microsoft/vscode-python), version [2020.10.332292344](https://github.com/microsoft/vscode-python/releases/tag/2020.10.332292344).
 - *Julia*: [julia-vscode](https://github.com/julia-vscode/julia-vscode), version [0.15.40](https://github.com/julia-vscode/julia-vscode/releases/tag/v0.15.40).
 - *C/C++*: [vscode-cpptools](https://github.com/Microsoft/vscode-cpptools), version [0.28.3](https://github.com/microsoft/vscode-cpptools/releases/tag/0.28.3).
 - *Fortran*: [Modern Fortran](https://github.com/krvajal/vscode-fortran-support), version [2.2.1](https://marketplace.visualstudio.com/items?itemName=krvajalm.linter-gfortran). (Requires vscode-cpptools)
