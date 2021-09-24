@@ -73,6 +73,8 @@ pkg_lib_openMPI=('environment-modules' 'openmpi-devel')
 pkg_lib_matPlotLib=('python3-matplotlib')
 pkg_lib_x11=('xorg-x11-apps' 'xorg-x11-xauth' 'xorg-x11-fonts*' 'Xvfb')
 pkg_lib_ray=('python3' 'python3-pip' 'python3-devel' 'gcc')
+pkg_lib_pytorch=('python3' 'python3-devel' 'python3-pip' 'python3-numpy' 'python3-scipy' 'python3-sympy' 'python3-ipython' 'python3-pandas')
+pkg_lib_jax=('python3' 'python3-devel' 'python3-pip' 'python3-numpy' 'python3-scipy' 'python3-sympy' 'python3-ipython' 'python3-pandas')
 
 # -- 1.3 DNF Packages: development environments   ------------------------------
 pkg_dev_jupyter=('nodejs' 'python3-pip' 'python3-notebook' 'mathjax' 'sscg' 'git')
@@ -128,6 +130,12 @@ if [ "$LIB_X11" = "TRUE" ] ; then
 
 if [ "$LIB_RAY" = "TRUE" ] ; then
   pkgs=("${pkgs[@]}" "${pkg_lib_ray[@]}") ; fi
+
+if [ "$LIB_PYTORCH" = "TRUE" ] ; then
+  pkgs=("${pkgs[@]}" "${pkg_lib_pytorch[@]}") ; fi
+
+if [ "$LIB_JAX" = "TRUE" ] ; then
+  pkgs=("${pkgs[@]}" "${pkg_lib_jax[@]}") ; fi
 
 # ----> development environments
 
@@ -242,11 +250,23 @@ if [ "$LIB_RAY" = "TRUE" ] ; then
     echo "WARNING: Ray install is currently disabled." # Disabled until Python 3.9 is supported (https://github.com/ray-project/ray/issues/11287)
 fi
 
-# -----> Python
+# -----> mpi4_py (requires python)
 if [ "$LANG_PYTHON3" = "TRUE" ] && [ "$LIB_OPENMPI" = "TRUE" ] ; then
     source /etc/profile.d/modules.sh
     module load mpi/openmpi-x86_64
     pip3 install mpi4py # https://mpi4py.readthedocs.io/en/stable/install.html
+fi
+
+# -----> pytorch (requires python)
+if [ "$LANG_PYTHON3" = "TRUE" ] && [ "$LIB_PYTORCH" = "TRUE" ] ; then
+    pip3 install torch==1.9.1+cpu torchvision==0.10.1+cpu torchaudio==0.9.1 -f https://download.pytorch.org/whl/torch_stable.html
+    pip3 install tensorboardX
+fi
+
+# -----> Jax (requires python)
+if [ "$LANG_PYTHON3" = "TRUE" ] && [ "$LIB_JAX" = "TRUE" ] ; then
+    pip install --upgrade pip
+    pip install --upgrade "jax[cpu]"
 fi
 
 # -----> Theia
