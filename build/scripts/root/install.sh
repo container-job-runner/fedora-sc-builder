@@ -246,8 +246,7 @@ fi
 
 # -----> Ray 
 if [ "$LIB_RAY" = "TRUE" ] ; then
-    # pip3 install ray
-    echo "WARNING: Ray install is currently disabled." # Disabled until Python 3.9 is supported (https://github.com/ray-project/ray/issues/11287)
+    pip3 install ray
 fi
 
 # -----> mpi4_py (requires python)
