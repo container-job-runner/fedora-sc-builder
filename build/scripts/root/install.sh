@@ -68,7 +68,7 @@ if [ "$DEV_JUPYTER" = "TRUE" ] ; then
 fi
 
 # -- 1.2 DNF Packages: libraries  ----------------------------------------------
-pkg_lib_linAlg=('liblas-devel' 'lapack-devel' 'fftw-devel')
+pkg_lib_linAlg=('liblas-devel' 'lapack-devel' 'fftw-devel' 'openblas-devel')
 pkg_lib_openMPI=('environment-modules' 'openmpi-devel')
 pkg_lib_matPlotLib=('python3-matplotlib')
 pkg_lib_x11=('xorg-x11-apps' 'xorg-x11-xauth' 'xorg-x11-fonts*' 'Xvfb')
